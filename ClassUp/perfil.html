@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil del Usuario - ClassUp</title>
+  <link rel="stylesheet" href="perfil.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Sección de Perfil -->
+    <section class="profile-section">
+      <div class="profile-card">
+        <img src="usuario.png" alt="Foto de perfil" class="profile-pic">
+        <div class="profile-info">
+          <h2 id="profile-name">Nombre de usuario</h2>
+          <p id="profile-email">correo@example.com</p>
+          <button id="edit-profile-btn">Editar perfil</button>
+        </div>
+      </div>
+
+      <!-- Formulario para editar -->
+      <form id="edit-form" class="edit-form hidden">
+        <label for="name">Nombre:</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Correo:</label>
+        <input type="email" id="email" required>
+
+        <button type="submit">Guardar cambios</button>
+      </form>
+    </section>
+
+    <hr class="divider">
+
+    <!-- Calendario embebido -->
+    <section class="calendar-section">
+      <div id="calendar-header">
+        <button id="prev-month"><--</button>
+        <h2 id="month-year"></h2>
+        <button id="next-month">--></button>
+      </div>
+
+      <div id="calendar"></div>
+
+      <div id="event-form">
+        <input type="text" id="event-title" placeholder="Título del evento">
+        <input type="date" id="event-date">
+        <input type="time" id="event-time">
+        <input type="text" id="event-desc" placeholder="Descripción (opcional)">
+        <button id="add-event">Agregar evento</button>
+      </div>
+
+      <h3>Eventos</h3>
+      <ul id="event-list"></ul>
+    </section>
+  </div>
+
+  <!-- Modal para eventos -->
+  <div id="event-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Eventos del día</h3>
+      <ul id="modal-event-list"></ul>
+    </div>
+  </div>
+  
+  <!-- Sección de edición de recordatorios -->
+<div id="edit-reminder-form">
+  <input type="text" id="event-title" placeholder="Título del evento">
+  <input type="date" id="event-date">
+  <input type="time" id="event-time">
+  <input type="text" id="event-desc" placeholder="Descripción (opcional)">
+  <button id="update-event" class="hidden">Actualizar evento</button>
+</div>
+
+<h3>Recordatorios guardados</h3>
+<ul id="event-list"></ul>
+
+
+  <script src="app.js"></script>
+  <script src="perfil.js"></script>
+</body>
+</html>
