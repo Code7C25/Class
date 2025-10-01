@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <h1>Login</h1>
+    <input type="text" id="nombre" placeholder="Usuario" required>
+    <input type="password" id="clave" placeholder="Contraseña" required>
+    <button onclick="login()">Entrar</button>
+    <button onclick="window.location.href='registro.html'">Registrarse</button>
+    <p id="mensaje"></p>
+    <script>
+        function login() {
+            var usuario = document.getElementById('nombre').value;
+            var clave = document.getElementById('clave').value;
+            var usuarioGuardado = localStorage.getItem('usuario');
+            var claveGuardada = localStorage.getItem('password');
+            if(usuario === usuarioGuardado && clave === claveGuardada) {
+                document.getElementById('mensaje').textContent = 'Login exitoso.';
+                setTimeout(function(){
+                    window.location.href = 'perfil.html';
+                }, 1200);
+            } else {
+                document.getElementById('mensaje').textContent = 'Usuario o contraseña incorrectos. ¿No tienes cuenta? Regístrate.';
+            }
+        }
+    </script>
+</body>
+</html>

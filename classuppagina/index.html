@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla de Inicio</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+
+    <h1>Bienvenido a ClassUp</h1>
+    <div class="form-container">
+        <input type="text" id="nombre" placeholder="Ingresa tu usuario" required>
+        <button onclick="login()">Entrar</button>
+        <a href="registro.html" class="link-registrate">Registrate</a>
+    </div>
+
+    <script>
+        function login() {
+            window.location.href = 'perfil.html';
+        }
+    </script>
+</body>
+</html>

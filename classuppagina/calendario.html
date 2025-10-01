@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendario Social</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="header-container">
+        <img src="ClassUp.png" alt="" class="header-image">
+         <h1>Calendario Social</h1>
+    </div>
+
+  <div id="calendar-header">
+    <button id="prev-month"><--</button>
+    <h2 id="month-year"></h2>
+    <button id="next-month">--></button>
+  </div>
+
+  <div id="calendar"></div>
+
+  <div id="event-form">
+    <input type="text" id="event-title" placeholder="Título del evento">
+    <input type="date" id="event-date">
+    <input type="time" id="event-time">
+    <input type="text" id="event-desc" placeholder="Descripción (opcional)">
+    <button id="add-event">Agregar evento</button>
+  </div>
+
+  <h3>Eventos</h3>
+  <ul id="event-list"></ul>
+
+  <!-- Modal -->
+  <div id="event-modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h3>Eventos del día</h3>
+      <ul id="modal-event-list"></ul>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

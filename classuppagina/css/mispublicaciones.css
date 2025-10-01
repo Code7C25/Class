@@ -1,0 +1,105 @@
+ body {
+      background-color: #f9f4ef;
+      padding: 40px;
+      color: #5c3a1d;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    header {
+      background: #fff;
+      text-align: center;
+      padding: 30px 0;
+      margin-bottom: 40px;
+      border-bottom: 3px solid #d1b7a1;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      border-radius: 12px;
+    }
+
+    .titulo-pagina {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #8b5e34;
+      text-shadow: 1px 1px 3px rgba(224,209,192,0.6);
+    }
+
+    .posts {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .post {
+      background: #fff;
+      border: 1px solid #e0d1c0;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 25px auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .post:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .titulo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #7a4c29;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .texto {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #5c3a1d;
+      margin-bottom: 15px;
+    }
+
+    .imagen-post {
+      display: block;
+      margin: 15px auto;
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      border: 2px solid #d1b7a1;
+    }
+
+    .fecha {
+      font-size: 13px;
+      color: #8b6f4e;
+      text-align: right;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .volver {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .volver a {
+      text-decoration: none;
+      color: #fff;
+      background: #d1b7a1;
+      padding: 12px 24px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 15px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+
+    .volver a:hover {
+      background: #b59b83;
+    }
+
+    .mensaje-vacio {
+      text-align: center; 
+      font-size: 17px; 
+      background: #fff8f0; 
+      padding: 20px; 
+      border-radius: 12px; 
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05); 
+      color: #7a4c29;
