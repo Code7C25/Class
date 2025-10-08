@@ -7,6 +7,13 @@
   <link rel="stylesheet" href="css/inicio.css">
 </head>
 <body>
+  <header class="app-header">
+    <div class="brand">
+  <!-- use a background-image div to avoid intrinsic image padding/sizing issues -->
+  <div class="app-logo" role="img" aria-label="ClassUp logo"></div>
+      <h1 class="app-title">ClassUp</h1>
+    </div>
+  </header>
   <div class="container">
     
     <!-- Encabezado -->
@@ -153,10 +160,29 @@
       calendarioContainer.style.display = "none";
     };
 
-    // Mostrar foto de perfil en el encabezado si existe en localStorage
-    const fotoPerfil = localStorage.getItem('fotoPerfil');
-    if (fotoPerfil) {
-      document.getElementById('foto-perfil-inicio').src = fotoPerfil;
+    // Mostrar foto de perfil en el encabezado si existe en localStorage (robusto)
+    function applyFotoPerfil() {
+      const fotoEl = document.getElementById('foto-perfil-inicio');
+      if (!fotoEl) {
+        console.warn('Elemento #foto-perfil-inicio no encontrado en la página');
+        return;
+      }
+      // Usar la misma función que usa el avatar de los posts (fallback al placeholder)
+      try {
+        fotoEl.src = getAvatarSrc();
+        console.log('inicio: asignada foto de encabezado desde getAvatarSrc() ->', fotoEl.src);
+      } catch (e) {
+        // Si getAvatarSrc aún no está definida, usar directamente localStorage o placeholder
+        const fotoPerfil = localStorage.getItem('fotoPerfil');
+        fotoEl.src = fotoPerfil || 'https://via.placeholder.com/100';
+        console.log('inicio: getAvatarSrc no disponible, asignada ->', fotoEl.src);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyFotoPerfil);
+    } else {
+      applyFotoPerfil();
     }
 
     // Función para obtener la foto de perfil para los avatares

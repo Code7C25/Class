@@ -1,3 +1,64 @@
+    .title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #8b5e34;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(224,209,192,0.6);
+        }  
+    /* App header: logo at left, title centered above content */
+    .app-header {
+      display: flex;
+      justify-content: center; /* center the brand container */
+      align-items: center;
+      width: 100%;
+      padding: 18px 0 10px; /* space below to separate from content */
+      box-sizing: border-box;
+      background: transparent;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      width: 100%;
+      max-width: 700px; /* match main container */
+      padding: 0 20px;  /* same horizontal padding as .container */
+      box-sizing: border-box;
+      margin: 0 auto;   /* center the brand block */
+    }
+    .app-logo {
+      width: 64px;
+      height: 64px;
+      display: block;
+      align-self: center;
+      border-radius: 8px;
+  /* use relative path from css/ to classuppagina root */
+  background-image: url("../ClassUp.png");
+  background-size: contain;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* ensure the title is vertically centered with the logo */
+    .app-title { line-height: 1; display: inline-block; }
+
+    /* Responsive: logo slightly smaller on very small screens */
+    @media (max-width: 420px) {
+      .app-logo { width: 40px; height: 40px; object-fit: cover; }
+      .app-title { font-size: 1.2rem; }
+    }
+
+    /* cap header visual overflow in case image has whitespace */
+    .app-header, .brand { overflow: hidden; }
+    .app-title {
+      margin: 0;
+      font-size: 1.8rem;
+      color: #8b5e34;
+      font-weight: 700;
+      text-align: center;
+    }
     body {
       font-family: Arial, sans-serif;
       background: #fdf6e3; /* beige claro */
