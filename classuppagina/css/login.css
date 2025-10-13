@@ -1,19 +1,102 @@
- body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #e0c0a1;
-        }
-        input {
-            padding: 10px;
-            margin: 10px 0;
-            font-size: 16px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+/* Estilo general */
+body {
+    margin: 0;
+    font-family: "Poppins", Arial, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #f0d9c2, #f8ebe0);
+}
+
+/* Contenedor central */
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+}
+
+/* Logo y título */
+.logo-img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+.logo h1 {
+    font-size: 1.8rem;
+    color: #4a2c2a;
+}
+.logo span {
+    color: #5c3a1d;
+    font-weight: bold;
+}
+
+/* Tarjeta del formulario */
+.form-card {
+    background: white;
+    padding: 30px 25px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    animation: fadeIn 0.7s ease;
+}
+
+.form-card h2 {
+    margin-bottom: 10px;
+    color: #4a2c2a;
+}
+
+/* Inputs */
+input {
+    padding: 12px;
+    border: 1.5px solid #d3b89f;
+    border-radius: 10px;
+    font-size: 16px;
+    width: 100%;
+    transition: all 0.3s ease;
+}
+input:focus {
+    border-color: #5c3a1d;
+    outline: none;
+    box-shadow: 0 0 5px rgba(216, 137, 74, 0.4);
+}
+
+/* Botón */
+button {
+    background-color: #5c3a1d;
+    border: none;
+    color: white;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+button:hover {
+    background-color: #b59b83;
+    transform: scale(1.02);
+}
+
+/* Link de registro */
+.registrate {
+    margin-top: 10px;
+    color: #4a2c2a;
+    font-size: 0.9rem;
+}
+.registrate a {
+    color: #b59b83;
+    font-weight: bold;
+    text-decoration: none;
+}
+.registrate a:hover {
+    text-decoration: underline;
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}

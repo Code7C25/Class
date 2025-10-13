@@ -1,19 +1,130 @@
- body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #e0c0a1;
-        }
-        input {
-            padding: 10px;
-            margin: 10px 0;
-            font-size: 16px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-        }
+/* Fondo y centrado general */
+body {
+  margin: 0;
+  font-family: "Poppins", Arial, sans-serif;
+  height: 100vh;
+  background: linear-gradient(135deg, #d1b7a1, #f8ebe0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Envoltura principal centrada */
+.main-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Tarjeta del formulario */
+.form-card {
+  background: white;
+  padding: 35px 30px;
+  border-radius: 20px;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  animation: fadeIn 0.7s ease;
+}
+
+/* Logo */
+.logo-img {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 10px;
+}
+.logo h1 {
+  font-size: 1.6rem;
+  color: #4a2c2a;
+  margin-bottom: 25px;
+}
+.logo span {
+  color: #b59b83;
+  font-weight: bold;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="password"],
+input[type="file"] {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  border: 1.5px solid #d3b89f;
+  border-radius: 10px;
+  font-size: 16px;
+  margin: 10px 0;
+  transition: all 0.3s ease;
+}
+input:focus {
+  border-color: #5c3a1d;
+  outline: none;
+  box-shadow: 0 0 5px rgba(216, 137, 74, 0.4);
+}
+
+/* Label y previsualización */
+.label-foto {
+  display: block;
+  font-size: 0.9rem;
+  color: #4a2c2a;
+  font-weight: bold;
+  text-align: left;
+  margin-top: 5px;
+}
+
+.preview {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 10px auto;
+  border: 2px solid #d3b89f;
+}
+
+/* Botón */
+button {
+  background-color: #5c3a1d;
+  border: none;
+  color: white;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+button:hover {
+  background-color: #b59b83;
+  transform: scale(1.03);
+}
+
+/* Mensaje */
+#mensaje {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+/* Link de volver */
+.volver {
+  margin-top: 15px;
+  color: #4a2c2a;
+  font-size: 0.9rem;
+}
+.volver a {
+  color: #b59b83;
+  font-weight: bold;
+  text-decoration: none;
+}
+.volver a:hover {
+  text-decoration: underline;
+}
+
+/* Animación */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}

@@ -61,7 +61,7 @@
     }
     body {
       font-family: Arial, sans-serif;
-      background: #fdf6e3; /* beige claro */
+      background: #f5e8dc; /* beige claro */
       margin: 0;
       padding: 0;
     }
@@ -75,7 +75,7 @@
       align-items: center;
       gap: 15px;
       padding: 15px;
-      background: #fff8e1;
+      background: #fff8f0;
       border-radius: 10px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     }
@@ -109,8 +109,8 @@
       display: inline-block;
     }
     .event-btn {
-      background: #d4a373;
-      color: white;
+      background: #fff8f0;
+      color: #5c3a1d;
       border: none;
       padding: 8px 12px;
       border-radius: 8px;
@@ -119,7 +119,7 @@
       transition: 0.2s;
     }
     .event-btn:hover {
-      background: #b07d52;
+      background: #fff8f0;
     }
     .divider {
       margin: 20px 0;
@@ -135,7 +135,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: #fff3cd;
+      background: #fff8f0;
       padding: 10px;
       border-radius: 8px;
       margin-bottom: 10px;
@@ -158,7 +158,7 @@
       background: #f0e1c6;
     }
     .today {
-      background: #d4a373;
+      background: #fff8f0;
       color: white;
     }
     #event-form {
@@ -175,11 +175,11 @@
       border: 1px solid #ccc;
     }
     #event-form button {
-      background: #d4a373;
-      color: white;
+      background: #fff8f0;
+      color: #5c3a1d;
       border: none;
       cursor: pointer;
     }
     #event-form button:hover {
-      background: #b07d52;
+      background: #fff8f0;
     }

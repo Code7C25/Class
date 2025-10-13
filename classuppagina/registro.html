@@ -1,46 +1,80 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Usuario</title>
-    <link rel="stylesheet" href="css/registro.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro | ClassUp</title>
+  <link rel="stylesheet" href="css/registro.css">
 </head>
 <body>
-    <h1>Registro de Usuario</h1>
-    <form id="form-registro">
-    <input type="text" id="usuario" placeholder="Usuario" required>
-    <input type="password" id="password" placeholder="Contraseña" required>
-    <input type="file" id="foto" accept="image/*">
-    <button type="submit">Registrar</button>
-    </form>
-    <p id="mensaje"></p>
-    <script>
-        document.getElementById('form-registro').addEventListener('submit', function(event) {
-            event.preventDefault();
-            var usuario = document.getElementById('usuario').value;
-            var password = document.getElementById('password').value;
-            var fotoInput = document.getElementById('foto');
-            if(usuario && password) {
-                if (fotoInput.files && fotoInput.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function(e) {
-                        localStorage.setItem('usuario', usuario);
-                        localStorage.setItem('password', password);
-                        localStorage.setItem('fotoPerfil', e.target.result);
-                        window.location.href = 'perfil.html';
-                    };
-                    reader.readAsDataURL(fotoInput.files[0]);
-                } else {
-                    localStorage.setItem('usuario', usuario);
-                    localStorage.setItem('password', password);
-                    localStorage.removeItem('fotoPerfil');
-                    window.location.href = 'perfil.html';
-                }
-            } else {
-                document.getElementById('mensaje').textContent = 'Completa todos los campos.';
-            }
-        });
-    </script>
+  <div class="main-wrapper">
+    <div class="form-card">
+      <div class="logo">
+        <img src="ClassUp.png" alt="ClassUp Logo" class="logo-img">
+        <h1>Crear cuenta en <span>ClassUp</span></h1>
+      </div>
+
+      <form id="form-registro">
+        <input type="text" id="usuario" placeholder="Nombre de usuario" required>
+        <input type="password" id="password" placeholder="Contraseña" required>
+        <label for="foto" class="label-foto">Foto de perfil</label>
+        <input type="file" id="foto" accept="image/*">
+        <img id="preview" class="preview" alt="Vista previa" style="display: none;">
+        <button type="submit">Registrar</button>
+      </form>
+
+      <p id="mensaje"></p>
+      <p class="volver">¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+    </div>
+  </div>
+
+  <script>
+    // Vista previa de la imagen
+    const fotoInput = document.getElementById('foto');
+    const preview = document.getElementById('preview');
+    fotoInput.addEventListener('change', function() {
+      const file = fotoInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          preview.src = e.target.result;
+          preview.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.display = "none";
+      }
+    });
+
+    // Registro con LocalStorage
+    document.getElementById('form-registro').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const usuario = document.getElementById('usuario').value.trim();
+      const password = document.getElementById('password').value.trim();
+
+      if (usuario === "" || password === "") {
+        document.getElementById('mensaje').textContent = "Completa todos los campos.";
+        return;
+      }
+
+      const fotoFile = fotoInput.files[0];
+      if (fotoFile) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          localStorage.setItem('usuario', usuario);
+          localStorage.setItem('password', password);
+          localStorage.setItem('fotoPerfil', e.target.result);
+          window.location.href = 'perfil.html';
+        };
+        reader.readAsDataURL(fotoFile);
+      } else {
+        localStorage.setItem('usuario', usuario);
+        localStorage.setItem('password', password);
+        localStorage.removeItem('fotoPerfil');
+        window.location.href = 'perfil.html';
+      }
+    });
+  </script>
 </body>
 </html>

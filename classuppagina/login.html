@@ -3,31 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Inicio de Sesión | ClassUp</title>
     <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-    <h1>Login</h1>
-    <input type="text" id="nombre" placeholder="Usuario" required>
-    <input type="password" id="clave" placeholder="Contraseña" required>
-    <button onclick="login()">Entrar</button>
-    <button onclick="window.location.href='registro.html'">Registrarse</button>
-    <p id="mensaje"></p>
+
+    <div class="container">
+        <div class="logo">
+            <img src="ClassUp.png" alt="ClassUp Logo" class="logo-img">
+            <h1>Bienvenido a <span>ClassUp</span></h1>
+        </div>
+
+        <div class="form-card">
+            <h2>Iniciar Sesión</h2>
+            <input type="text" id="usuario" placeholder="Nombre de usuario" required>
+            <input type="password" id="clave" placeholder="Contraseña" required>
+            <button onclick="login()">Entrar</button>
+            <p class="registrate">¿No tienes cuenta? 
+                <a href="registro.html">Regístrate</a>
+            </p>
+        </div>
+    </div>
+
     <script>
         function login() {
-            var usuario = document.getElementById('nombre').value;
-            var clave = document.getElementById('clave').value;
-            var usuarioGuardado = localStorage.getItem('usuario');
-            var claveGuardada = localStorage.getItem('password');
-            if(usuario === usuarioGuardado && clave === claveGuardada) {
-                document.getElementById('mensaje').textContent = 'Login exitoso.';
-                setTimeout(function(){
-                    window.location.href = 'perfil.html';
-                }, 1200);
+            const usuario = document.getElementById('usuario').value.trim();
+            const clave = document.getElementById('clave').value.trim();
+
+            if (usuario === "" || clave === "") {
+                alert("Por favor completa todos los campos.");
+                return;
+            }
+
+            // Validación simulada (podés mejorarla con almacenamiento local)
+            if (usuario === "admin" && clave === "1234") {
+                window.location.href = 'perfil.html';
             } else {
-                document.getElementById('mensaje').textContent = 'Usuario o contraseña incorrectos. ¿No tienes cuenta? Regístrate.';
+                alert("Usuario o contraseña incorrectos.");
             }
         }
     </script>
+
 </body>
 </html>
