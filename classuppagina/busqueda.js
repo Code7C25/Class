@@ -1,4 +1,3 @@
-// Simulamos una "base de datos" de usuarios (podés modificar o ampliar)
 const usuariosSimulados = [
   { nombre: "Lucía Pérez", usuario: "lucia_pz", foto: "https://i.pravatar.cc/150?img=1" },
   { nombre: "Mariano López", usuario: "marianl", foto: "https://i.pravatar.cc/150?img=2" },
@@ -7,6 +6,9 @@ const usuariosSimulados = [
   { nombre: "Sofía Herrera", usuario: "sofih", foto: "https://i.pravatar.cc/150?img=5" }
 ];
 
+// Obtener usuario actual
+const usuarioActual = JSON.parse(localStorage.getItem("usuarioActual"));
+if (!usuarioActual) 
 const input = document.getElementById("search-input");
 const resultados = document.getElementById("resultados");
 
@@ -20,7 +22,8 @@ input.addEventListener("input", () => {
   }
 
   const filtrados = usuariosSimulados.filter(u =>
-    u.nombre.toLowerCase().includes(query) || u.usuario.toLowerCase().includes(query)
+    u.usuario !== usuarioActual.usuario && // no mostrarte a vos mismo
+    (u.nombre.toLowerCase().includes(query) || u.usuario.toLowerCase().includes(query))
   );
 
   if (filtrados.length === 0) {
@@ -48,15 +51,15 @@ input.addEventListener("input", () => {
 });
 
 function agregarAmigo(usuario) {
-  let amigos = JSON.parse(localStorage.getItem("amigos")) || [];
-  const existe = amigos.some(a => a.usuario === usuario.usuario);
+  const clave = `amigos_${usuarioActual.usuario}`;
+  let amigos = JSON.parse(localStorage.getItem(clave)) || [];
 
-  if (existe) {
+  if (amigos.some(a => a.usuario === usuario.usuario)) {
     alert(`${usuario.nombre} ya está en tu lista de amigos.`);
     return;
   }
 
   amigos.push(usuario);
-  localStorage.setItem("amigos", JSON.stringify(amigos));
+  localStorage.setItem(clave, JSON.stringify(amigos));
   alert(`${usuario.nombre} se agregó a tus amigos 👥`);
 }

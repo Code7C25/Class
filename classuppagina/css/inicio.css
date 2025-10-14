@@ -183,3 +183,36 @@
     #event-form button:hover {
       background: #fff8f0;
     }
+/* Cuadro inferior fijo */
+.cuadro-opciones {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+  background: #fff8f0;
+  padding: 14px 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  z-index: 60;
+  max-width: 460px;
+  width: auto;
+}
+
+.cuadro-opciones .boton-opcion {
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  color: #5c3a1d;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.cuadro-opciones .boton-opcion:hover {
+  background: #f2e6dd;
+}

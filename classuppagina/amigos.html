@@ -3,51 +3,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Amigos - ClassUp</title>
+  <title>Mis Amigos - ClassUp</title>
   <link rel="stylesheet" href="css/amigos.css">
 </head>
 <body>
-  <header class="app-header">
+  <div class="container">
+  <header class="profile-section">
     <h1>👥 Mis Amigos</h1>
   </header>
 
-  <main class="amigos-container">
-    <div class="amigos-lista" id="amigos-lista">
-      <p class="empty-msg">Aún no tienes amigos agregados 😢</p>
-    </div>
-  </main>
+  <section id="lista-amigos">
+    <p class="empty-msg">Aún no tienes amigos agregados.</p>
+  </section>
 
-  <nav class="nav-bar">
-    <a href="inicio.html" class="nav-btn">🏠 Inicio</a>
-    <a href="perfil.html" class="nav-btn">👤 Perfil</a>
-    <a href="configuracion.html" class="nav-btn">⚙️ Ajustes</a>
-  </nav>
+  <!-- Cuadro inferior de accesos rápidos -->
+  <div class="cuadro-opciones">
+    <a href="inicio.html" class="boton-opcion">🏠 Inicio</a>
+    <a href="busqueda.html" class="boton-opcion">🔍 Buscar</a>
+    <a href="perfil.html" class="boton-opcion">👤 Perfil</a>
+    <a href="amigos.html" class="boton-opcion">👥 Amigos</a>
+    <a href="configuracion.html" class="boton-opcion">⚙️ Ajustes</a>
+  </div>
+</div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const amigosLista = document.getElementById("amigos-lista");
-      const amigosGuardados = JSON.parse(localStorage.getItem("amigos")) || [];
+const usuarioActual = JSON.parse(localStorage.getItem("usuarioActual"));
+const contenedor = document.getElementById("lista-amigos");
 
-      if (amigosGuardados.length === 0) return;
+if (!usuarioActual) {
+  // Si no hay usuario logueado, solo mostramos mensaje
+  contenedor.innerHTML = `<p class="empty-msg">Debes iniciar sesión para ver tus amigos.</p>`;
+} else {
+  const clave = `amigos_${usuarioActual.usuario}`;
+  const amigos = JSON.parse(localStorage.getItem(clave)) || [];
 
-      amigosLista.innerHTML = "";
-      amigosGuardados.forEach(amigo => {
-        const div = document.createElement("div");
-        div.classList.add("amigo-card");
-        div.innerHTML = `
-          <img src="${amigo.foto || 'https://via.placeholder.com/60'}" class="amigo-foto" alt="foto de ${amigo.nombre}">
-          <div class="amigo-info">
-            <h3>${amigo.nombre}</h3>
-            <p>${amigo.usuario || 'Sin usuario'}</p>
+  if (amigos.length === 0) {
+    contenedor.innerHTML = `<p class="empty-msg">Aún no tienes amigos agregados.</p>`;
+  } else {
+    contenedor.innerHTML = "";
+    amigos.forEach(a => {
+      const div = document.createElement("div");
+      div.classList.add("usuario-card");
+      div.innerHTML = `
+        <div class="usuario-info">
+          <img src="${a.foto}" class="usuario-foto" alt="Foto de ${a.nombre}">
+          <div>
+            <p class="usuario-nombre">${a.nombre}</p>
+            <p>@${a.usuario}</p>
           </div>
-        `;
-        div.addEventListener("click", () => {
-          localStorage.setItem("amigoSeleccionado", JSON.stringify(amigo));
-          window.location.href = "perfil_amigo.html";
-        });
-        amigosLista.appendChild(div);
-      });
+        </div>
+      `;
+      contenedor.appendChild(div);
     });
-  </script>
+  }
+}
+</script>
+
 </body>
 </html>

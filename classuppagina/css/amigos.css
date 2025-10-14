@@ -1,99 +1,130 @@
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f5e8dc;
+  color: #5c3a1d;
+  padding: 20px;
   margin: 0;
-  padding: 0;
-  background-color: #f4e3cf;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
 }
 
-.app-header {
-  background-color: #e0b994;
-  color: #fff;
-  text-align: center;
+.container {
+  max-width: 1000px;
   width: 100%;
-  padding: 15px 0;
-  font-size: 22px;
-  font-weight: bold;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.amigos-container {
-  flex: 1;
-  width: 90%;
-  max-width: 400px;
-  margin: 30px auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.amigos-lista {
+.profile-section {
+  background: #fff8f0;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+  text-align: center;
 }
 
 .amigo-card {
   display: flex;
   align-items: center;
-  background-color: #fff8f1;
-  border-radius: 15px;
-  padding: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  gap: 15px;
+  background: #fff8f0;
+  border-radius: 12px;
+  padding: 10px 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 1000px;
   cursor: pointer;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
 .amigo-card:hover {
   transform: scale(1.02);
-  background-color: #ffe8cc;
+  background: #d1b7a1;
+  color: white;
 }
 
 .amigo-foto {
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  margin-right: 15px;
   object-fit: cover;
 }
 
 .amigo-info h3 {
   margin: 0;
-  color: #333;
+  font-size: 20px;
 }
 
 .amigo-info p {
   margin: 3px 0 0;
-  color: #666;
   font-size: 14px;
+  color: #5c3a1d;
 }
 
 .empty-msg {
   text-align: center;
   color: #777;
   font-style: italic;
+  margin-top: 20px;
 }
 
-.nav-bar {
-  width: 100%;
-  background-color: #e0b994;
+.divider {
+  margin: 40px 0 20px;
+  border: none;
+  border-top: 2px dashed #d1b7a1;
+}
+
+/* --- Cuadro de accesos rápidos --- */
+.cuadro-opciones {
+  position: fixed !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  bottom: 20px !important;
+  background: #fff8f0 !important;
+  padding: 14px 18px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18) !important;
+  z-index: 9999 !important;
+  border: 2px solid rgba(165, 135, 110, 0.9) !important;
+  max-width: 460px !important;
+  width: auto !important;
   display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
 }
 
-.nav-btn {
+.cuadro-opciones .boton-opcion {
   text-decoration: none;
-  color: white;
-  font-weight: bold;
-  transition: 0.3s;
+  background: transparent;
+  border: none;
+  color: #5c3a1d !important;
+  font-weight: 600;
+  padding: 6px 8px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 
-.nav-btn:hover {
-  color: #fcead4;
+.cuadro-opciones .boton-opcion:hover {
+  background: #f2e6dd;
+}
+
+/* Responsive */
+@media (max-width: 420px) {
+  .cuadro-opciones {
+    bottom: 12px;
+    padding: 10px 12px;
+    gap: 8px;
+    max-width: 95%;
+  }
+  .amigo-foto {
+    width: 80px;
+    height: 80px;
+  }
 }

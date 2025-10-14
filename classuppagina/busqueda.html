@@ -2,35 +2,99 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Buscar Usuarios - ClassUp</title>
-  <link rel="stylesheet" href="css/busqueda.css" />
+  <link rel="stylesheet" href="css/busqueda.css">
 </head>
 <body>
   <div class="container">
-    <header>
+
+    <!-- Header -->
+    <header class="profile-section">
       <h1>🔍 Buscar Usuarios</h1>
       <div class="search-bar">
         <img src="lupa.png" alt="Lupa" class="search-icon">
         <input type="text" id="search-input" placeholder="Buscar por nombre de usuario...">
+        <ul id="suggestions" class="hidden"></ul>
       </div>
     </header>
 
-    <section id="resultados" class="resultados">
-      <p class="empty-msg">Empieza a escribir para buscar usuarios...</p>
+    <!-- Resultados -->
+    <section class="resultados" id="lista-usuarios">
+      <p class="empty-msg">Comienza a buscar usuarios...</p>
     </section>
 
-    <hr class="divider">
-    <nav class="calendar-section">
-      <div style="display: flex; justify-content: space-around; margin-top: 15px;">
-        <a href="inicio.html" class="event-btn">🏠 Inicio</a>
-        <a href="perfil.html" class="event-btn">👤 Perfil</a>
-        <a href="amigos.html" class="event-btn">👥 Amigos</a>
-        <a href="configuracion.html" class="event-btn">⚙️ Ajustes</a>
-      </div>
-    </nav>
   </div>
 
-  <script src="busqueda.js"></script>
+  <!-- Cuadro inferior fijo -->
+  <div class="cuadro-opciones">
+    <a href="inicio.html" class="boton-opcion">🏠 Inicio</a>
+    <a href="busqueda.html" class="boton-opcion">🔍 Buscar</a>
+    <a href="perfil.html" class="boton-opcion">👤 Perfil</a>
+    <a href="amigos.html" class="boton-opcion">👥 Amigos</a>
+    <a href="configuracion.html" class="boton-opcion">⚙️ Ajustes</a>
+  </div>
+
+  <script>
+    // Datos de ejemplo
+    const usuarios = [
+      {nombre: "Julieta Luján", usuario: "lujanjulieta", foto: "foto1.jpg"},
+      {nombre: "Gere Danilo", usuario: "gere123", foto: "foto2.jpg"},
+      {nombre: "Ana Pérez", usuario: "ana123", foto: "foto3.jpg"}
+    ];
+
+    const usuarioActual = JSON.parse(localStorage.getItem("usuarioActual")) || {usuario: "invitado"};
+    const searchInput = document.getElementById('search-input');
+    const listaUsuarios = document.getElementById('lista-usuarios');
+
+    // Recuperar amigos del usuario actual
+    const clave = `amigos_${usuarioActual.usuario}`;
+    const amigos = JSON.parse(localStorage.getItem(clave)) || [];
+
+    function renderUsuarios(texto = '') {
+      const resultados = usuarios.filter(u => 
+        u.nombre.toLowerCase().includes(texto) || u.usuario.toLowerCase().includes(texto)
+      );
+
+      listaUsuarios.innerHTML = '';
+      if(resultados.length === 0){
+        listaUsuarios.innerHTML = '<p class="empty-msg">No se encontraron usuarios.</p>';
+      } else {
+        resultados.forEach(u => {
+          const div = document.createElement('div');
+          div.classList.add('usuario-card');
+
+          // Ver si ya es amigo
+          const esAmigo = amigos.some(a => a.usuario === u.usuario);
+          const btnAgregar = esAmigo ? '' : `<button class="add-btn">Agregar</button>`;
+
+          div.innerHTML = `
+            <div class="usuario-info">
+              <img src="${u.foto}" alt="Foto de ${u.nombre}" class="usuario-foto">
+              <div>
+                <p class="usuario-nombre">${u.nombre}</p>
+                <p>@${u.usuario}</p>
+              </div>
+            </div>
+            ${btnAgregar}
+          `;
+          listaUsuarios.appendChild(div);
+
+          // Evento de agregar amigo
+          if(!esAmigo){
+            div.querySelector('.add-btn').addEventListener('click', () => {
+              amigos.push(u);
+              localStorage.setItem(clave, JSON.stringify(amigos));
+              renderUsuarios(searchInput.value);
+            });
+          }
+        });
+      }
+    }
+
+    searchInput.addEventListener('input', () => renderUsuarios(searchInput.value));
+
+    renderUsuarios(); // Render inicial
+  </script>
 </body>
 </html>
