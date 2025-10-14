@@ -1,0 +1,99 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4e3cf;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.app-header {
+  background-color: #e0b994;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  padding: 15px 0;
+  font-size: 22px;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.amigos-container {
+  flex: 1;
+  width: 90%;
+  max-width: 400px;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.amigos-lista {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.amigo-card {
+  display: flex;
+  align-items: center;
+  background-color: #fff8f1;
+  border-radius: 15px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.amigo-card:hover {
+  transform: scale(1.02);
+  background-color: #ffe8cc;
+}
+
+.amigo-foto {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-right: 15px;
+  object-fit: cover;
+}
+
+.amigo-info h3 {
+  margin: 0;
+  color: #333;
+}
+
+.amigo-info p {
+  margin: 3px 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.empty-msg {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}
+
+.nav-bar {
+  width: 100%;
+  background-color: #e0b994;
+  display: flex;
+  justify-content: space-around;
+  padding: 10px 0;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}
+
+.nav-btn {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.nav-btn:hover {
+  color: #fcead4;
+}

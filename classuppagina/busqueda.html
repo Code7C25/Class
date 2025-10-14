@@ -8,29 +8,27 @@
 </head>
 <body>
   <div class="container">
-
-    <!-- Encabezado de búsqueda -->
     <header>
-      <h1>Buscar Usuarios</h1>
+      <h1>🔍 Buscar Usuarios</h1>
       <div class="search-bar">
         <img src="lupa.png" alt="Lupa" class="search-icon">
         <input type="text" id="search-input" placeholder="Buscar por nombre de usuario...">
-        <ul id="suggestions" class="suggestions-list hidden"></ul>
       </div>
     </header>
 
-    <!-- Accesos rápidos -->
+    <section id="resultados" class="resultados">
+      <p class="empty-msg">Empieza a escribir para buscar usuarios...</p>
+    </section>
+
     <hr class="divider">
     <nav class="calendar-section">
       <div style="display: flex; justify-content: space-around; margin-top: 15px;">
-        <a href="inicio.html" class="boton-opcion">🏠 Inicio</a>
-        <a href="busqueda.html" class="event-btn">🔍 Buscar</a>
+        <a href="inicio.html" class="event-btn">🏠 Inicio</a>
         <a href="perfil.html" class="event-btn">👤 Perfil</a>
         <a href="amigos.html" class="event-btn">👥 Amigos</a>
         <a href="configuracion.html" class="event-btn">⚙️ Ajustes</a>
       </div>
     </nav>
-
   </div>
 
   <script src="busqueda.js"></script>

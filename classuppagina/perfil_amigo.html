@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil del Amigo - ClassUp</title>
+  <link rel="stylesheet" href="css/perfil_amigo.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Perfil del Amigo</h1>
+  </header>
+
+  <main class="perfil-container">
+    <img id="foto-amigo" src="https://via.placeholder.com/100" class="foto-perfil" alt="Foto del amigo">
+    <h2 id="nombre-amigo">Nombre del Amigo</h2>
+    <p id="usuario-amigo">@usuario</p>
+    <div class="info-extra">
+      <p>📚 Actividades compartidas próximamente...</p>
+    </div>
+    <button class="volver-btn" onclick="window.history.back()">⬅️ Volver</button>
+  </main>
+
+  <script>
+    const amigo = JSON.parse(localStorage.getItem("amigoSeleccionado"));
+    if (amigo) {
+      document.getElementById("foto-amigo").src = amigo.foto || "https://via.placeholder.com/100";
+      document.getElementById("nombre-amigo").textContent = amigo.nombre;
+      document.getElementById("usuario-amigo").textContent = amigo.usuario ? "@" + amigo.usuario : "@usuario";
+    }
+  </script>
+</body>
+</html>

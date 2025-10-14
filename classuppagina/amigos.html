@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amigos - ClassUp</title>
+  <link rel="stylesheet" href="css/amigos.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>👥 Mis Amigos</h1>
+  </header>
+
+  <main class="amigos-container">
+    <div class="amigos-lista" id="amigos-lista">
+      <p class="empty-msg">Aún no tienes amigos agregados 😢</p>
+    </div>
+  </main>
+
+  <nav class="nav-bar">
+    <a href="inicio.html" class="nav-btn">🏠 Inicio</a>
+    <a href="perfil.html" class="nav-btn">👤 Perfil</a>
+    <a href="configuracion.html" class="nav-btn">⚙️ Ajustes</a>
+  </nav>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const amigosLista = document.getElementById("amigos-lista");
+      const amigosGuardados = JSON.parse(localStorage.getItem("amigos")) || [];
+
+      if (amigosGuardados.length === 0) return;
+
+      amigosLista.innerHTML = "";
+      amigosGuardados.forEach(amigo => {
+        const div = document.createElement("div");
+        div.classList.add("amigo-card");
+        div.innerHTML = `
+          <img src="${amigo.foto || 'https://via.placeholder.com/60'}" class="amigo-foto" alt="foto de ${amigo.nombre}">
+          <div class="amigo-info">
+            <h3>${amigo.nombre}</h3>
+            <p>${amigo.usuario || 'Sin usuario'}</p>
+          </div>
+        `;
+        div.addEventListener("click", () => {
+          localStorage.setItem("amigoSeleccionado", JSON.stringify(amigo));
+          window.location.href = "perfil_amigo.html";
+        });
+        amigosLista.appendChild(div);
+      });
+    });
+  </script>
+</body>
+</html>
