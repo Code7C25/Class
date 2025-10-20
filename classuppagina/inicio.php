@@ -1,0 +1,253 @@
+<?php
+// inicio.php - versión PHP de la página principal que incluye la conexión
+include 'conexion.php';
+session_start();
+$usuario = '';
+if (!empty($_SESSION['usuario'])) {
+    $usuario = $_SESSION['usuario'];
+} elseif (!empty($_COOKIE['usuario'])) {
+    $usuario = $_COOKIE['usuario'];
+}
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calendario Social</title>
+  <link rel="stylesheet" href="css/inicio.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <!-- use a background-image div to avoid intrinsic image padding/sizing issues -->
+      <div class="app-logo" role="img" aria-label="ClassUp logo"></div>
+      <h1 class="app-title">ClassUp</h1>
+    </div>
+  </header>
+  <div class="container">
+    
+    <!-- Encabezado -->
+    <header class="profile-section">
+      <div class="profile-card">
+  <img id="foto-perfil-inicio" src="https://via.placeholder.com/100" alt="fotoPerfil" class="profile-pic">
+        <div class="profile-info">
+          <h2>Mi Calendario Social</h2>
+        </div>
+      </div>
+    </header>
+
+    <!-- Botón para agregar recordatorio -->
+    <section class="calendar-section">
+      <h3>Recordatorios recientes</h3>
+      <button class="event-btn" onclick="toggleCalendario()">➕ Nuevo recordatorio</button>
+      
+      <!-- Calendario oculto -->
+      <div id="calendarioContainer" style="display:none; margin-top:15px;">
+        <div id="calendar-header">
+          <button id="prev-month"><--</button>
+          <h2 id="month-year"></h2>
+          <button id="next-month">--></button>
+        </div>
+        <div id="calendar"></div>
+        <div id="event-form">
+          <input type="text" id="event-title" placeholder="Título del evento">
+          <input type="date" id="event-date">
+          <input type="time" id="event-time">
+          <input type="text" id="event-desc" placeholder="Descripción (opcional)">
+          <button id="add-event">Agregar evento</button>
+        </div>
+      </div>
+
+      <!-- Contenedor de publicaciones -->
+      <div id="postsContainer">
+        <p class="empty-msg">Todavía no hay recordatorios 📭</p>
+      </div>
+    </section>
+    
+   <!-- Cuadro inferior fijo -->
+  <div class="cuadro-opciones">
+    <a href="inicio.php" class="boton-opcion">🏠 Inicio</a>
+    <a href="busqueda.html" class="boton-opcion">🔍 Buscar</a>
+    <a href="perfil.html" class="boton-opcion">👤 Perfil</a>
+    <a href="amigos.html" class="boton-opcion">👥 Amigos</a>
+    <a href="configuracion.html" class="boton-opcion">⚙️ Ajustes</a>
+  </div>
+
+  <script>
+    const calendarioContainer = document.getElementById("calendarioContainer");
+    const postsContainer = document.getElementById("postsContainer");
+
+    function toggleCalendario() {
+      calendarioContainer.style.display = 
+        calendarioContainer.style.display === "none" ? "block" : "none";
+      renderCalendar();
+    }
+
+    // --- Lógica de calendario ---
+    const calendar = document.getElementById("calendar");
+    const monthYear = document.getElementById("month-year");
+    let currentDate = new Date();
+
+    function renderCalendar() {
+      calendar.innerHTML = "";
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      const firstDay = new Date(year, month, 1).getDay();
+      const lastDate = new Date(year, month + 1, 0).getDate();
+      const today = new Date();
+
+      const months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio",
+                      "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+      monthYear.textContent = `${months[month]} ${year}`;
+
+      // Días vacíos al inicio
+      for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
+        const empty = document.createElement("div");
+        calendar.appendChild(empty);
+      }
+
+      // Días del mes
+      for (let d = 1; d <= lastDate; d++) {
+        const day = document.createElement("div");
+        day.textContent = d;
+        day.classList.add("day");
+        if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+          day.classList.add("today");
+        }
+        calendar.appendChild(day);
+      }
+    }
+
+    document.getElementById("prev-month").onclick = () => {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      renderCalendar();
+    };
+    document.getElementById("next-month").onclick = () => {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      renderCalendar();
+    };
+
+    // --- Publicar evento ---
+    document.getElementById("add-event").onclick = () => {
+      const title = document.getElementById("event-title").value;
+      const date = document.getElementById("event-date").value;
+      const time = document.getElementById("event-time").value;
+      const desc = document.getElementById("event-desc").value;
+
+      if (!title || !date) {
+        alert("Completa al menos título y fecha.");
+        return;
+      }
+
+      const emptyMsg = postsContainer.querySelector(".empty-msg");
+      if (emptyMsg) emptyMsg.remove();
+
+      const post = document.createElement("div");
+      post.classList.add("post");
+      post.innerHTML = `
+        <div class="post-header">
+          <img src="https://via.placeholder.com/50" class="avatar" alt="avatar">
+          <div>
+            <strong>${title}</strong>
+            <p class="post-date">📅 ${date} ⏰ ${time || "Sin hora"}</p>
+          </div>
+        </div>
+        <div class="post-content">
+          <p>${desc || "Sin descripción"}</p>
+        </div>
+      `;
+      postsContainer.prepend(post);
+
+      // Resetear form
+      document.getElementById("event-title").value = "";
+      document.getElementById("event-date").value = "";
+      document.getElementById("event-time").value = "";
+      document.getElementById("event-desc").value = "";
+      calendarioContainer.style.display = "none";
+    };
+
+    // Mostrar foto de perfil en el encabezado si existe en localStorage (robusto)
+    function applyFotoPerfil() {
+      const fotoEl = document.getElementById('foto-perfil-inicio');
+      if (!fotoEl) {
+        console.warn('Elemento #foto-perfil-inicio no encontrado en la página');
+        return;
+      }
+      // Usar la misma función que usa el avatar de los posts (fallback al placeholder)
+      try {
+        fotoEl.src = getAvatarSrc();
+        console.log('inicio: asignada foto de encabezado desde getAvatarSrc() ->', fotoEl.src);
+      } catch (e) {
+        // Si getAvatarSrc aún no está definida, usar directamente localStorage o placeholder
+        const fotoPerfil = localStorage.getItem('fotoPerfil');
+        fotoEl.src = fotoPerfil || 'https://via.placeholder.com/100';
+        console.log('inicio: getAvatarSrc no disponible, asignada ->', fotoEl.src);
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', applyFotoPerfil);
+    } else {
+      applyFotoPerfil();
+    }
+
+    // Función para obtener la foto de perfil para los avatares
+    function getAvatarSrc() {
+      return localStorage.getItem('fotoPerfil') || 'https://via.placeholder.com/50';
+    }
+
+    // Modificar la función de agregar evento para usar la foto de perfil como avatar
+    const originalAddEvent = document.getElementById("add-event").onclick;
+    document.getElementById("add-event").onclick = () => {
+      const title = document.getElementById("event-title").value;
+      const date = document.getElementById("event-date").value;
+      const time = document.getElementById("event-time").value;
+      const desc = document.getElementById("event-desc").value;
+
+      if (!title || !date) {
+        alert("Completa al menos título y fecha.");
+        return;
+      }
+
+      const emptyMsg = postsContainer.querySelector(".empty-msg");
+      if (emptyMsg) emptyMsg.remove();
+
+      const post = document.createElement("div");
+      post.classList.add("post");
+      post.innerHTML = `
+        <div class="post-header">
+          <img src="${getAvatarSrc()}" class="avatar" alt="avatar">
+          <div>
+            <strong>${title}</strong>
+            <p class="post-date">📅 ${date} ⏰ ${time || "Sin hora"}</p>
+          </div>
+        </div>
+        <div class="post-content">
+          <p>${desc || "Sin descripción"}</p>
+        </div>
+      `;
+      postsContainer.prepend(post);
+
+      // Resetear form
+      document.getElementById("event-title").value = "";
+      document.getElementById("event-date").value = "";
+      document.getElementById("event-time").value = "";
+      document.getElementById("event-desc").value = "";
+      calendarioContainer.style.display = "none";
+    };
+
+    renderCalendar();
+  </script>
+
+  <script>
+    // Si PHP detectó usuario en sesión/cookie, copiarlo a localStorage (compatibilidad)
+    (function(){
+      var usuarioFromServer = <?= json_encode($usuario) ?>;
+      if (usuarioFromServer) {
+        try { localStorage.setItem('usuario', usuarioFromServer); console.log('inicio.php: usuario set in localStorage ->', usuarioFromServer); } catch(e){}
+      }
+    })();
+  </script>
+</body>
+</html>

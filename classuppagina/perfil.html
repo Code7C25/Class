@@ -158,5 +158,18 @@
     <a href="cerrarsesion.html" class="boton-opcion">🚪 Cerrar sesión</a>
     <a href="inicio.html" class="boton-opcion">🏠 Inicio</a>
   </div>
+    <script>
+      // Copiar cookie 'usuario' (establecida por index.php) a localStorage para compatibilidad
+      (function(){
+        function getCookie(name) {
+          const v = document.cookie.match('(?:^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+          return v ? v.pop() : '';
+        }
+        const usuarioCookie = getCookie('usuario');
+        if (usuarioCookie) {
+          try { localStorage.setItem('usuario', usuarioCookie); console.log('perfil: usuario from cookie ->', usuarioCookie); } catch(e){}
+        }
+      })();
+    </script>
 </body>
 </html>

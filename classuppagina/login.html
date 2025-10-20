@@ -16,9 +16,11 @@
 
         <div class="form-card">
             <h2>Iniciar Sesión</h2>
-            <input type="text" id="usuario" placeholder="Nombre de usuario" required>
-            <input type="password" id="clave" placeholder="Contraseña" required>
-            <button onclick="login()">Entrar</button>
+            <form method="post" action="login.php" id="loginForm">
+                <input type="text" id="usuario" name="usuario" placeholder="Nombre de usuario" required>
+                <input type="password" id="clave" name="clave" placeholder="Contraseña" required>
+                <button type="submit">Entrar</button>
+            </form>
             <p class="registrate">¿No tienes cuenta? 
                 <a href="registro.html">Regístrate</a>
             </p>
@@ -26,22 +28,15 @@
     </div>
 
     <script>
-        function login() {
+        // Validación simple en cliente antes de enviar
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
             const usuario = document.getElementById('usuario').value.trim();
             const clave = document.getElementById('clave').value.trim();
-
-            if (usuario === "" || clave === "") {
-                alert("Por favor completa todos los campos.");
-                return;
+            if (!usuario || !clave) {
+                e.preventDefault();
+                alert('Por favor completa todos los campos.');
             }
-
-            // Validación simulada (podés mejorarla con almacenamiento local)
-            if (usuario === "admin" && clave === "1234") {
-                window.location.href = 'perfil.html';
-            } else {
-                alert("Usuario o contraseña incorrectos.");
-            }
-        }
+        });
     </script>
 
 </body>
