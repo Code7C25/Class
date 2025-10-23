@@ -42,14 +42,14 @@
     }
     .boton {
   display: inline-block;
-  background-color: #4CAF50;
+  background-color: #d1b7a1;
   color: white;
   padding: 10px 20px;
   text-decoration: none;
   border-radius: 6px;
 }
 .boton:hover {
-  background-color: #45a049;
+  background-color: #ccb9bb;
 }
     button {
       background: #d1b7a1;

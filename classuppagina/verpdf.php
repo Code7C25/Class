@@ -1,5 +1,5 @@
 <?php
-$archivo = __DIR__ . 'Manual_de_Usuario_ClassUp.pdf'; // Ruta absoluta
+$archivo = __DIR__ . '/Manual_de_Usuario_ClassUp.pdf'; // <-- agregada la barra
 
 if (file_exists($archivo)) {
     header('Content-Type: application/pdf');
