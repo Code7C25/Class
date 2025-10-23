@@ -5,12 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calendario Social</title>
   <link rel="stylesheet" href="css/inicio.css">
+  <style>
+    /* 🔔 Estilos agregados para campana y comentarios */
+    .campana-btn {
+      background: none;
+      border: none;
+      font-size: 22px;
+      cursor: pointer;
+      margin-left: auto;
+      transition: transform 0.2s ease;
+    }
+    .campana-btn:hover {
+      transform: scale(1.2);
+    }
+    .comentarios-section {
+      border-top: 1px solid #ccc;
+      padding-top: 8px;
+      margin-top: 10px;
+    }
+    .comentarios-section textarea {
+      width: 100%;
+      resize: none;
+      margin-top: 5px;
+      border-radius: 5px;
+      padding: 5px;
+    }
+    .comentarios-section button {
+      margin-top: 5px;
+      background-color: #7a5c3d;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 4px 10px;
+      cursor: pointer;
+    }
+    .comentario {
+      background-color: #f0f0f0;
+      color: #000;
+      border-radius: 6px;
+      padding: 5px 8px;
+      margin-top: 5px;
+    }
+  </style>
 </head>
 <body>
   <header class="app-header">
     <div class="brand">
-  <!-- use a background-image div to avoid intrinsic image padding/sizing issues -->
-  <div class="ClassUp.png" role="img" aria-label="ClassUp logo"></div>
+      <div class="ClassUp.png" role="img" aria-label="ClassUp logo"></div>
       <h1 class="app-title">ClassUp</h1>
     </div>
   </header>
@@ -19,7 +60,7 @@
     <!-- Encabezado -->
     <header class="profile-section">
       <div class="profile-card">
-  <img id="foto-perfil-inicio" src="https://via.placeholder.com/100" alt="fotoPerfil" class="profile-pic">
+        <img id="foto-perfil-inicio" src="https://via.placeholder.com/100" alt="fotoPerfil" class="profile-pic">
         <div class="profile-info">
           <h2>Mi Calendario Social</h2>
         </div>
@@ -54,179 +95,166 @@
       </div>
     </section>
     
-   <!-- Cuadro inferior fijo -->
-  <div class="cuadro-opciones">
-    <a href="inicio.html" class="boton-opcion">🏠 Inicio</a>
-    <a href="busqueda.html" class="boton-opcion">🔍 Buscar</a>
-    <a href="perfil.html" class="boton-opcion">👤 Perfil</a>
-    <a href="amigos.html" class="boton-opcion">👥 Amigos</a>
-    <a href="configuracion.html" class="boton-opcion">⚙️ Ajustes</a>
-  </div>
+    <!-- Cuadro inferior fijo -->
+    <div class="cuadro-opciones">
+      <a href="inicio.html" class="boton-opcion">🏠 Inicio</a>
+      <a href="busqueda.html" class="boton-opcion">🔍 Buscar</a>
+      <a href="perfil.html" class="boton-opcion">👤 Perfil</a>
+      <a href="amigos.html" class="boton-opcion">👥 Amigos</a>
+      <a href="configuracion.html" class="boton-opcion">⚙️ Ajustes</a>
+    </div>
 
-  <script>
-    const calendarioContainer = document.getElementById("calendarioContainer");
-    const postsContainer = document.getElementById("postsContainer");
+    <script>
+      const calendarioContainer = document.getElementById("calendarioContainer");
+      const postsContainer = document.getElementById("postsContainer");
 
-    function toggleCalendario() {
-      calendarioContainer.style.display = 
-        calendarioContainer.style.display === "none" ? "block" : "none";
-      renderCalendar();
-    }
-
-    // --- Lógica de calendario ---
-    const calendar = document.getElementById("calendar");
-    const monthYear = document.getElementById("month-year");
-    let currentDate = new Date();
-
-    function renderCalendar() {
-      calendar.innerHTML = "";
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth();
-      const firstDay = new Date(year, month, 1).getDay();
-      const lastDate = new Date(year, month + 1, 0).getDate();
-      const today = new Date();
-
-      const months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio",
-                      "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-      monthYear.textContent = `${months[month]} ${year}`;
-
-      // Días vacíos al inicio
-      for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
-        const empty = document.createElement("div");
-        calendar.appendChild(empty);
+      function toggleCalendario() {
+        calendarioContainer.style.display = 
+          calendarioContainer.style.display === "none" ? "block" : "none";
+        renderCalendar();
       }
 
-      // Días del mes
-      for (let d = 1; d <= lastDate; d++) {
-        const day = document.createElement("div");
-        day.textContent = d;
-        day.classList.add("day");
-        if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
-          day.classList.add("today");
+      // --- Lógica de calendario ---
+      const calendar = document.getElementById("calendar");
+      const monthYear = document.getElementById("month-year");
+      let currentDate = new Date();
+
+      function renderCalendar() {
+        calendar.innerHTML = "";
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        const firstDay = new Date(year, month, 1).getDay();
+        const lastDate = new Date(year, month + 1, 0).getDate();
+        const today = new Date();
+
+        const months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio",
+                        "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+        monthYear.textContent = `${months[month]} ${year}`;
+
+        for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
+          const empty = document.createElement("div");
+          calendar.appendChild(empty);
         }
-        calendar.appendChild(day);
-      }
-    }
 
-    document.getElementById("prev-month").onclick = () => {
-      currentDate.setMonth(currentDate.getMonth() - 1);
-      renderCalendar();
-    };
-    document.getElementById("next-month").onclick = () => {
-      currentDate.setMonth(currentDate.getMonth() + 1);
-      renderCalendar();
-    };
-
-    // --- Publicar evento ---
-    document.getElementById("add-event").onclick = () => {
-      const title = document.getElementById("event-title").value;
-      const date = document.getElementById("event-date").value;
-      const time = document.getElementById("event-time").value;
-      const desc = document.getElementById("event-desc").value;
-
-      if (!title || !date) {
-        alert("Completa al menos título y fecha.");
-        return;
+        for (let d = 1; d <= lastDate; d++) {
+          const day = document.createElement("div");
+          day.textContent = d;
+          day.classList.add("day");
+          if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+            day.classList.add("today");
+          }
+          calendar.appendChild(day);
+        }
       }
 
-      const emptyMsg = postsContainer.querySelector(".empty-msg");
-      if (emptyMsg) emptyMsg.remove();
+      document.getElementById("prev-month").onclick = () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar();
+      };
+      document.getElementById("next-month").onclick = () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar();
+      };
 
-      const post = document.createElement("div");
-      post.classList.add("post");
-      post.innerHTML = `
-        <div class="post-header">
-          <img src="https://via.placeholder.com/50" class="avatar" alt="avatar">
-          <div>
-            <strong>${title}</strong>
-            <p class="post-date">📅 ${date} ⏰ ${time || "Sin hora"}</p>
+      // --- Publicar evento con campana y comentarios ---
+      document.getElementById("add-event").onclick = () => {
+        const title = document.getElementById("event-title").value;
+        const date = document.getElementById("event-date").value;
+        const time = document.getElementById("event-time").value;
+        const desc = document.getElementById("event-desc").value;
+
+        if (!title || !date) {
+          alert("Completa al menos título y fecha.");
+          return;
+        }
+
+        const emptyMsg = postsContainer.querySelector(".empty-msg");
+        if (emptyMsg) emptyMsg.remove();
+
+        const post = document.createElement("div");
+        post.classList.add("post");
+
+        const postId = "post_" + Date.now();
+
+        post.innerHTML = `
+          <div class="post-header">
+            <img src="${getAvatarSrc()}" class="avatar" alt="avatar">
+            <div>
+              <strong>${title}</strong>
+              <p class="post-date">📅 ${date} ⏰ ${time || "Sin hora"}</p>
+            </div>
+            <button class="campana-btn" onclick="activarCampana('${postId}', this)">🔔</button>
           </div>
-        </div>
-        <div class="post-content">
-          <p>${desc || "Sin descripción"}</p>
-        </div>
-      `;
-      postsContainer.prepend(post);
-
-      // Resetear form
-      document.getElementById("event-title").value = "";
-      document.getElementById("event-date").value = "";
-      document.getElementById("event-time").value = "";
-      document.getElementById("event-desc").value = "";
-      calendarioContainer.style.display = "none";
-    };
-
-    // Mostrar foto de perfil en el encabezado si existe en localStorage (robusto)
-    function applyFotoPerfil() {
-      const fotoEl = document.getElementById('foto-perfil-inicio');
-      if (!fotoEl) {
-        console.warn('Elemento #foto-perfil-inicio no encontrado en la página');
-        return;
-      }
-      // Usar la misma función que usa el avatar de los posts (fallback al placeholder)
-      try {
-        fotoEl.src = getAvatarSrc();
-        console.log('inicio: asignada foto de encabezado desde getAvatarSrc() ->', fotoEl.src);
-      } catch (e) {
-        // Si getAvatarSrc aún no está definida, usar directamente localStorage o placeholder
-        const fotoPerfil = localStorage.getItem('fotoPerfil');
-        fotoEl.src = fotoPerfil || 'https://via.placeholder.com/100';
-        console.log('inicio: getAvatarSrc no disponible, asignada ->', fotoEl.src);
-      }
-    }
-
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', applyFotoPerfil);
-    } else {
-      applyFotoPerfil();
-    }
-
-    // Función para obtener la foto de perfil para los avatares
-    function getAvatarSrc() {
-      return localStorage.getItem('fotoPerfil') || 'https://via.placeholder.com/50';
-    }
-
-    // Modificar la función de agregar evento para usar la foto de perfil como avatar
-    const originalAddEvent = document.getElementById("add-event").onclick;
-    document.getElementById("add-event").onclick = () => {
-      const title = document.getElementById("event-title").value;
-      const date = document.getElementById("event-date").value;
-      const time = document.getElementById("event-time").value;
-      const desc = document.getElementById("event-desc").value;
-
-      if (!title || !date) {
-        alert("Completa al menos título y fecha.");
-        return;
-      }
-
-      const emptyMsg = postsContainer.querySelector(".empty-msg");
-      if (emptyMsg) emptyMsg.remove();
-
-      const post = document.createElement("div");
-      post.classList.add("post");
-      post.innerHTML = `
-        <div class="post-header">
-          <img src="${getAvatarSrc()}" class="avatar" alt="avatar">
-          <div>
-            <strong>${title}</strong>
-            <p class="post-date">📅 ${date} ⏰ ${time || "Sin hora"}</p>
+          <div class="post-content">
+            <p>${desc || "Sin descripción"}</p>
           </div>
-        </div>
-        <div class="post-content">
-          <p>${desc || "Sin descripción"}</p>
-        </div>
-      `;
-      postsContainer.prepend(post);
+          <div class="comentarios-section" id="comentarios_${postId}">
+            <h4>Comentarios</h4>
+            <div class="lista-comentarios"></div>
+            <textarea placeholder="Escribe un comentario..."></textarea>
+            <button onclick="agregarComentario('${postId}')">Comentar</button>
+          </div>
+        `;
+        postsContainer.prepend(post);
 
-      // Resetear form
-      document.getElementById("event-title").value = "";
-      document.getElementById("event-date").value = "";
-      document.getElementById("event-time").value = "";
-      document.getElementById("event-desc").value = "";
-      calendarioContainer.style.display = "none";
-    };
+        document.getElementById("event-title").value = "";
+        document.getElementById("event-date").value = "";
+        document.getElementById("event-time").value = "";
+        document.getElementById("event-desc").value = "";
+        calendarioContainer.style.display = "none";
+      };
 
-    renderCalendar();
-  </script>
+      // --- Foto de perfil ---
+      function applyFotoPerfil() {
+        const fotoEl = document.getElementById('foto-perfil-inicio');
+        if (!fotoEl) return;
+        try {
+          fotoEl.src = getAvatarSrc();
+        } catch (e) {
+          const fotoPerfil = localStorage.getItem('fotoPerfil');
+          fotoEl.src = fotoPerfil || 'https://via.placeholder.com/100';
+        }
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyFotoPerfil);
+      } else {
+        applyFotoPerfil();
+      }
+
+      function getAvatarSrc() {
+        return localStorage.getItem('fotoPerfil') || 'https://via.placeholder.com/50';
+      }
+
+      // --- 🔔 Activar campana ---
+      function activarCampana(postId, btn) {
+        btn.textContent = "🔕";
+        btn.disabled = true;
+        alert("Recordatorio activado 🔔");
+      }
+
+      // --- 💬 Agregar comentario ---
+      function agregarComentario(postId) {
+        const post = document.getElementById("comentarios_" + postId);
+        const textarea = post.querySelector("textarea");
+        const lista = post.querySelector(".lista-comentarios");
+        const texto = textarea.value.trim();
+
+        if (texto === "") {
+          alert("Escribe un comentario antes de enviar.");
+          return;
+        }
+
+        const nuevoComentario = document.createElement("p");
+        nuevoComentario.classList.add("comentario");
+        nuevoComentario.textContent = texto;
+        lista.appendChild(nuevoComentario);
+
+        textarea.value = "";
+      }
+
+      renderCalendar();
+    </script>
+  </div>
 </body>
 </html>
