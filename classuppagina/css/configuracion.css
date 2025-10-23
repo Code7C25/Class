@@ -1,67 +1,47 @@
- body {
-      background-color: #f9f4ef;
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
+body {
+  background-color: #f9f4ef;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
 
-    .cuadro-opciones {
-      background: #fff;
-      border: 1px solid #e0d1c0;
-      border-radius: 16px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      padding: 30px;
-      text-align: center;
-      max-width: 320px;
-      width: 90%;
-    }
+.cuadro-opciones {
+  background: #fff;
+  border: 1px solid #e0d1c0;
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  padding: 30px;
+  text-align: center;
+  max-width: 320px;
+  width: 90%;
+}
 
-    .cuadro-opciones h2 {
-      color: #5c3a1d;
-      margin-bottom: 20px;
-    }
+.cuadro-opciones h2 {
+  color: #5c3a1d;
+  margin-bottom: 20px;
+}
 
-    .boton-opcion {
-      display: block;
-      margin: 10px 0;
-      padding: 12px;
-      background: #d1b7a1;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      font-weight: bold;
-      transition: background 0.3s ease;
-    }
-
-    .boton-opcion:hover {
-      background: #b59b83;
-    }
-    .boton {
-  display: inline-block;
-  background-color: #d1b7a1;
+/* Estilo unificado para todos los botones */
+.boton-opcion, .boton, button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  background: #d1b7a1;
   color: white;
-  padding: 10px 20px;
   text-decoration: none;
-  border-radius: 6px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }
-.boton:hover {
-  background-color: #ccb9bb;
-}
-    button {
-      background: #d1b7a1;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 10px;
-    }
 
-    button:hover {
-      background: #b59b83;
-    }
+.boton-opcion:hover, .boton:hover, button:hover {
+  background: #b59b83;
+}

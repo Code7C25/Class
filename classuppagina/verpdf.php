@@ -1,5 +1,5 @@
 <?php
-$archivo = __DIR__ . '/Manual_de_Usuario_ClassUp.pdf'; // <-- agregada la barra
+$archivo = __DIR__ . '/Manual_de_Usuario_ClassUp.pdf'; 
 
 if (file_exists($archivo)) {
     header('Content-Type: application/pdf');
