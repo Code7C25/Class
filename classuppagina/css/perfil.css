@@ -278,5 +278,142 @@ body {
   .cuadro-opciones .boton-opcion {
     color: #5c3a1d !important;
   }
+/* Fondo general y tipografía */
+body {
+  background-color: #f9f4ef;
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 500px;
+  margin: 30px auto;
+  background: #fff;
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+/* Sección de perfil */
+.profile-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-card {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  background: #fff8f0;
+  padding: 15px 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border: 2px solid rgba(165,135,110,0.8);
+  flex-direction: column;
+  text-align: center;
+}
+
+.profile-pic {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #a7876e;
+  margin-bottom: 10px;
+}
+
+.profile-info h2 {
+  margin: 0;
+  color: #5c3a1d;
+}
+
+.profile-info p {
+  margin: 4px 0 8px;
+  color: #7a5c3d;
+}
+
+/* Divisor */
+.divider {
+  border: 0;
+  border-top: 1px solid #e0d1c0;
+  margin: 20px 0;
+}
+
+/* Calendario */
+.calendar-section {
+  text-align: center;
+}
+
+#calendar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+#month-year {
+  font-weight: bold;
+  color: #5c3a1d;
+}
+
+#tabla-calendario {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+#tabla-calendario th, #tabla-calendario td {
+  padding: 8px;
+  border: 1px solid #e0d1c0;
+}
+
+#tabla-calendario td.hoy {
+  background-color: #d1b7a1;
+  color: white;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+/* Menú inferior */
+.cuadro-opciones {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+  background: #fff8f0;
+  padding: 14px 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  z-index: 9999;
+  border: 2px solid rgba(165,135,110,0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Botones */
+.boton-opcion, .boton, button {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+  padding: 12px;
+  background: #d1b7a1;
+  color: white;
+  text-decoration: none;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.boton-opcion:hover, .boton:hover, button:hover {
+  background: #b59b83;
+}
 
   
