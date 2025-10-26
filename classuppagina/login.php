@@ -1,64 +1,99 @@
 <?php
-// login.php - procesa el formulario de login y crea sesión/cookie
-include 'conexion.php';
 session_start();
 
-// Aceptar sólo métodos POST
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: login.html');
-    exit;
+// Conexión a MySQL
+$host = "localhost";
+$user = "root";
+$pass = "";
+$db = "classup";
+
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    die("Error de conexión: " . $conn->connect_error);
 }
 
-$usuario = isset($_POST['usuario']) ? trim($_POST['usuario']) : '';
-$clave = isset($_POST['clave']) ? trim($_POST['clave']) : '';
+// Procesar el formulario
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $usuario = trim($_POST['usuario']);
+    $clave = trim($_POST['clave']);
 
-if ($usuario === '' || $clave === '') {
-    echo "<script>alert('Completa usuario y contraseña.'); window.location='login.html';</script>";
-    exit;
-}
-
-// Crear tabla usuarios si no existe (campos mínimos: id, nombre, clave)
-$createTableSql = "CREATE TABLE IF NOT EXISTS usuarios (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL UNIQUE,
-    clave VARCHAR(255) NOT NULL,
-    creado TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4";
-$conexion->query($createTableSql);
-
-// Buscar usuario
-$stmt = $conexion->prepare('SELECT id, nombre, clave FROM usuarios WHERE nombre = ? LIMIT 1');
-$stmt->bind_param('s', $usuario);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result && $result->num_rows > 0) {
-    // Usuario existe -> verificar contraseña
-    $row = $result->fetch_assoc();
-    $stored = $row['clave'];
-    // Para compatibilidad con el sistema existente, aquí hacemos una verificación simple.
-    // Si más adelante querés seguridad, reemplazar por password_hash / password_verify.
-    if ($stored === $clave) {
-        // Login exitoso
-        $_SESSION['usuario'] = $usuario;
-        setcookie('usuario', $usuario, time() + 60*60*24*30, '/');
-        header('Location: perfil.html');
-        exit;
+    if ($usuario === "" || $clave === "") {
+        $error = "Completa todos los campos.";
     } else {
-        echo "<script>alert('Usuario o contraseña incorrectos.'); window.location='login.html';</script>";
-        exit;
-    }
-} else {
-    // Usuario no existe -> crear el usuario con la contraseña proporcionada
-    $insert = $conexion->prepare('INSERT INTO usuarios (nombre, clave) VALUES (?, ?)');
-    $insert->bind_param('ss', $usuario, $clave);
-    if ($insert->execute()) {
-        $_SESSION['usuario'] = $usuario;
-        setcookie('usuario', $usuario, time() + 60*60*24*30, '/');
-        header('Location: perfil.html');
-        exit;
-    } else {
-        echo "<script>alert('Error al crear usuario. Intenta luego.'); window.location='login.html';</script>";
-        exit;
+        // Buscar usuario en la base de datos
+        $stmt = $conn->prepare("SELECT password, fotoPerfil FROM users WHERE usuario = ?");
+        $stmt->bind_param("s", $usuario);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            $stmt->bind_result($passwordHash, $fotoPerfil);
+            $stmt->fetch();
+
+            // Verificar contraseña
+            if (password_verify($clave, $passwordHash)) {
+                // Guardar en localStorage y redirigir a perfil.html
+                echo "<script>
+                    localStorage.setItem('usuario', '".addslashes($usuario)."');
+                    localStorage.setItem('fotoPerfil', '".addslashes($fotoPerfil)."');
+                    window.location.href = 'perfil.html';
+                </script>";
+                exit;
+            } else {
+                $error = "Contraseña incorrecta.";
+            }
+        } else {
+            $error = "Usuario no encontrado.";
+        }
+        $stmt->close();
     }
 }
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión | ClassUp</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="logo">
+        <img src="ClassUp.png" alt="ClassUp Logo" class="logo-img">
+        <h1>Bienvenido a <span>ClassUp</span></h1>
+    </div>
+
+    <div class="form-card">
+        <h2>Iniciar Sesión</h2>
+        <form method="post" action="login.php" id="loginForm">
+            <input type="text" id="usuario" name="usuario" placeholder="Nombre de usuario" required>
+            <input type="password" id="clave" name="clave" placeholder="Contraseña" required>
+            <button type="submit">Entrar</button>
+        </form>
+        <?php
+        if (isset($error)) {
+            echo "<p style='color:red; margin-top:10px;'>$error</p>";
+        }
+        ?>
+        <p class="registrate">¿No tienes cuenta? 
+            <a href="registro.html">Regístrate</a>
+        </p>
+    </div>
+</div>
+
+<script>
+    // Validación simple en cliente
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+        const usuario = document.getElementById('usuario').value.trim();
+        const clave = document.getElementById('clave').value.trim();
+        if (!usuario || !clave) {
+            e.preventDefault();
+            alert('Por favor completa todos los campos.');
+        }
+    });
+</script>
+
+</body>
+</html>
