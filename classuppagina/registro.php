@@ -26,6 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST['password']);
     $fotoPerfil = null;
 
+    if (empty($usuario) || empty($password)) {
+        echo "<p style='color:red;'>Completa todos los campos.</p>";
+        exit;
+    }
+
     // Encriptar contraseña
     $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
@@ -36,12 +41,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         move_uploaded_file($_FILES['foto']['tmp_name'], $fotoPerfil);
     }
 
-    // Insertar usuario en la tabla "users"
+    // Verificar si el usuario ya existe
+    $check = $conn->prepare("SELECT id FROM users WHERE usuario = ?");
+    $check->bind_param("s", $usuario);
+    $check->execute();
+    $check->store_result();
+
+    if ($check->num_rows > 0) {
+        echo "<p style='color:red;'>El nombre de usuario ya existe.</p>";
+        exit;
+    }
+
+    // Insertar usuario en la tabla
     $stmt = $conn->prepare("INSERT INTO users (usuario, password, fotoPerfil) VALUES (?, ?, ?)");
-$stmt->bind_param("sss", $usuario, $passwordHash, $fotoPerfil);
+    $stmt->bind_param("sss", $usuario, $passwordHash, $fotoPerfil);
 
     if ($stmt->execute()) {
-        // Guardar usuario y foto en localStorage y redirigir a perfil.html
         echo "<script>
             localStorage.setItem('usuario', '".addslashes($usuario)."');
             localStorage.setItem('fotoPerfil', '".addslashes($fotoPerfil)."');
@@ -49,8 +64,12 @@ $stmt->bind_param("sss", $usuario, $passwordHash, $fotoPerfil);
         </script>";
         exit;
     } else {
-        $error = "El nombre de usuario ya existe o hubo un error.";
-        echo "<p style='color:red;'>$error</p>";
+        echo "<p style='color:red;'>Error al registrar usuario: " . $stmt->error . "</p>";
     }
+
+    $stmt->close();
+    $check->close();
 }
+
+$conn->close();
 ?>
