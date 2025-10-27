@@ -3,7 +3,7 @@
 $host = "localhost";
 $usuario = "root";
 $clave = ""; // Si usás XAMPP, dejar vacío. Si usás otro, poner la contraseña.
-$bd = "classup";
+$bd = "paginaclassup";
 
 // Crear conexión
 $conexion = new mysqli($host, $usuario, $clave, $bd);

@@ -14,14 +14,13 @@
         <h1>Crear cuenta en <span>ClassUp</span></h1>
       </div>
 
-      <form id="form-registro" method="POST" action="registro.php" enctype="multipart/form-data">
-        <input type="text" id="usuario" name="usuario" placeholder="Nombre de usuario" required>
-        <input type="password" id="password" name="password" placeholder="Contraseña" required>
-        <label for="foto">Foto de perfil</label>
-        <input type="file" id="foto" name="foto" accept="image/*">
-        <img id="preview" src="" alt="Vista previa" style="display:none; max-width:100px; margin-top:10px;">
-        <button type="submit">Registrar</button>
-      </form>
+    <form id="form-registro" method="POST" action="registro.php" enctype="multipart/form-data">
+  <input type="text" id="usuario" name="usuario" placeholder="Nombre de usuario" required>
+  <input type="password" id="password" name="password" placeholder="Contraseña" required>
+  <label for="foto">Foto de perfil</label>
+  <input type="file" id="foto" name="foto" accept="image/*">
+  <button type="submit">Registrar</button>
+</form>
 
       <p id="mensaje"></p>
       <p class="volver">¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>

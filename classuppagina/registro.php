@@ -5,7 +5,7 @@ session_start();
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "classup";
+$db = "paginaclassup"; // Asegúrate de que la BD se llame así exactamente
 
 // Conectar a la base de datos
 $conn = new mysqli($host, $user, $pass, $db);
@@ -22,6 +22,7 @@ if (!file_exists('uploads')) {
 
 // Procesar el formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // OJO: el name del input es "usuario" (no "usuarios")
     $usuario = trim($_POST['usuario']);
     $password = trim($_POST['password']);
     $fotoPerfil = null;
@@ -43,28 +44,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Verificar si el usuario ya existe
     $check = $conn->prepare("SELECT id FROM users WHERE usuario = ?");
+    if (!$check) {
+        die("Error en la consulta SELECT: " . $conn->error);
+    }
     $check->bind_param("s", $usuario);
     $check->execute();
     $check->store_result();
 
     if ($check->num_rows > 0) {
         echo "<p style='color:red;'>El nombre de usuario ya existe.</p>";
+        $check->close();
+        $conn->close();
         exit;
     }
 
     // Insertar usuario en la tabla
     $stmt = $conn->prepare("INSERT INTO users (usuario, password, fotoPerfil) VALUES (?, ?, ?)");
+    if (!$stmt) {
+        die("Error en la consulta INSERT: " . $conn->error);
+    }
     $stmt->bind_param("sss", $usuario, $passwordHash, $fotoPerfil);
 
     if ($stmt->execute()) {
-        echo "<script>
-            localStorage.setItem('usuario', '".addslashes($usuario)."');
-            localStorage.setItem('fotoPerfil', '".addslashes($fotoPerfil)."');
+        ?>
+        <script>
+            localStorage.setItem('usuario', <?= json_encode($usuario) ?>);
+            localStorage.setItem('fotoPerfil', <?= json_encode($fotoPerfil) ?>);
             window.location.href = 'perfil.html';
-        </script>";
+        </script>
+        <?php
         exit;
     } else {
-        echo "<p style='color:red;'>Error al registrar usuario: " . $stmt->error . "</p>";
+        echo "<p style='color:red;'>Error al registrar usuario: " . htmlspecialchars($stmt->error) . "</p>";
     }
 
     $stmt->close();
