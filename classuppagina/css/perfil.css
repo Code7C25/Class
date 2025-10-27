@@ -1,349 +1,88 @@
+/* ======== ESTILOS PERFIL CLASSUP ======== */
+
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #f5e8dc;
-    color: #5c3a1d;
-    padding: 20px;
-    margin: 0;
-  }
-  
-  .container {
-    max-width: 1000px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .profile-section {
-    background: #fff8f0;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-  }
-  
-  .profile-card {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    justify-content: center;
-  }
-  
-  .profile-pic {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .profile-info h2 {
-    margin: 0;
-    font-size: 24px;
-    text-align: center;
-  }
-  
-  .profile-info p {
-    margin: 5px 0;
-    font-size: 14px;
-    text-align: center;
-  }
-  
-  #edit-profile-btn {
-    background: #d1b7a1;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .edit-form {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .edit-form input {
-    padding: 10px;
-    border: 1px solid #e0d1c0;
-    border-radius: 8px;
-    background: #fdf7f2;
-  }
-  
-  .edit-form button {
-    background: #b59b83;
-    color: white;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-  }
-  
-  .hidden {
-    display: none;
-  }
-  
-  .divider {
-    margin: 40px 0 20px;
-    border: none;
-    border-top: 2px dashed #d1b7a1;
-  }
-  
-  /* Reutilizamos el CSS del calendario que ya tenés
-     (se removió la regla vacía para evitar warning del linter).
-     Inserta aquí tu CSS del calendario si lo necesitas.
-  */
-  /* Estilo cuadrado bonito para el calendario */
-.calendar-section {
-  background: #fff8f0;
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-  
-  #calendar {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
-    margin-top: 20px;
-    padding: 10px;
-    background: #fdf7f2;
-    border-radius: 10px;
-    justify-content: center;
-  }
-
-  #tabla-calendario {
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-  }
-
-  #tabla-calendario th, #tabla-calendario td {
-    text-align: center;
-  }
-  
-  /* Día individual */
-  .day {
-    background: #d1b7a1;
-    border: 1px solid #e8d8c3;
-    padding: 15px;
-    text-align: center;
-    position: relative;
-    border-radius: 8px;
-    color: #5c3a1d;
-    cursor: pointer;
-  }
-  
-  .day:hover {
-    background: #dbc2ad;
-  }
-  
-  #calendar-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
-  }
-  
-  #month-year {
-    font-size: 1.5rem;
-    color: #5c3a1d;
-  }
-  
-  /* Botones de navegación */
-  #prev-month, #next-month {
-    background: #b59b83;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  #event-form {
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  #event-form input {
-    flex: 1 1 200px;
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #e0d1c0;
-    background: #fdf7f2;
-  }
-  
-  #add-event {
-    padding: 8px 16px;
-    background: #d1b7a1;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
-  /* Cerrar sesión */
-  .logout-btn {
-    margin-top: 10px;
-    background: #ef5350;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  /* Recuadro inferior con las opciones (Ver perfil / Cerrar sesión / Inicio) */
-  .cuadro-opciones {
-    position: fixed; /* fijo en la pantalla */
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: 20px; /* separacion del borde inferior */
-    background: #fff8f0; /* mismo fondo que .profile-section */
-    padding: 14px 18px;
-    border-radius: 12px; /* mismo radio */
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1); /* sombra parecida */
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-content: center;
-    z-index: 60;
-    max-width: 360px; /* ancho máximo para que sea similar al contenido de perfil */
-    width: calc(100% - 40px);
-    box-sizing: border-box;
-  }
-
-  .cuadro-opciones .boton-opcion {
-    text-decoration: none;
-    background: transparent;
-    border: none;
-    color: #5c3a1d;
-    font-weight: 600;
-    padding: 6px 8px;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-
-  .cuadro-opciones .boton-opcion:hover {
-    background: #f2e6dd;
-  }
-
-  /* En pantallas muy pequeñas ajustamos el tamaño y espaciado */
-  @media (max-width: 420px) {
-    .cuadro-opciones {
-      bottom: 12px;
-      padding: 10px 12px;
-      gap: 8px;
-      max-width: 95%;
-    }
-    .profile-pic { width: 80px; height: 80px; }
-  }
-  
-  /* ======= Overrides for visibility (debug / forced) =======
-     Estas reglas usan !important y un borde visible para forzar
-     que el recuadro aparezca aunque haya estilos que lo sobrescriban.
-     Si prefieres, puedo quitar el borde/bandera después de verificar.
-  */
-  .cuadro-opciones {
-    position: fixed !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    bottom: 20px !important;
-    background: #fff8f0 !important;
-    padding: 14px 18px !important;
-    border-radius: 12px !important;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.18) !important;
-    z-index: 9999 !important;
-    border: 2px solid rgba(165, 135, 110, 0.9) !important; /* borde visible para debug */
-    max-width: 460px !important;
-    width: auto !important;
-  }
-
-  .cuadro-opciones .boton-opcion {
-    color: #5c3a1d !important;
-  }
-/* Fondo general y tipografía */
-body {
-  background-color: #f9f4ef;
   font-family: 'Segoe UI', sans-serif;
+  background: #f5e8dc;
+  color: #5c3a1d;
   margin: 0;
-  padding: 0;
+  padding: 20px;
 }
 
+/* CONTENEDOR PRINCIPAL */
 .container {
-  max-width: 500px;
-  margin: 30px auto;
-  background: #fff;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  max-width: 800px;
+  margin: 0 auto 100px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Sección de perfil */
+/* ======== SECCIÓN DE PERFIL ======== */
 .profile-section {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 20px;
+  background: #fff8f0;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 .profile-card {
   display: flex;
-  gap: 15px;
-  align-items: center;
-  background: #fff8f0;
-  padding: 15px 20px;
-  border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  border: 2px solid rgba(165,135,110,0.8);
   flex-direction: column;
-  text-align: center;
+  align-items: center;
+  gap: 12px;
 }
 
 .profile-pic {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
-  border: 2px solid #a7876e;
-  margin-bottom: 10px;
+  object-fit: cover;
+  border: 2px solid #b59b83;
 }
 
 .profile-info h2 {
-  margin: 0;
+  margin: 8px 0 2px;
+  font-size: 1.4rem;
   color: #5c3a1d;
 }
 
 .profile-info p {
-  margin: 4px 0 8px;
+  margin: 0 0 10px;
   color: #7a5c3d;
+  font-size: 0.9rem;
 }
 
-/* Divisor */
+.profile-info .boton-opcion {
+  display: inline-block;
+  background: #d1b7a1;
+  color: #fff;
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background 0.3s ease;
+}
+.profile-info .boton-opcion:hover {
+  background: #b59b83;
+}
+
+/* ======== DIVISOR ======== */
 .divider {
-  border: 0;
-  border-top: 1px solid #e0d1c0;
-  margin: 20px 0;
+  margin: 30px 0;
+  border: none;
+  border-top: 2px dashed #d1b7a1;
+  width: 100%;
 }
 
-/* Calendario */
+/* ======== CALENDARIO ======== */
 .calendar-section {
+  background: #fff8f0;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
   text-align: center;
 }
 
@@ -351,24 +90,45 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 15px;
+  margin-bottom: 15px;
 }
 
 #month-year {
-  font-weight: bold;
+  font-size: 1.4rem;
   color: #5c3a1d;
+  font-weight: bold;
 }
 
+#prev-month,
+#next-month {
+  background: #b59b83;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+#prev-month:hover,
+#next-month:hover {
+  background: #a28569;
+}
+
+/* Tabla calendario */
 #tabla-calendario {
   width: 100%;
   border-collapse: collapse;
-  text-align: center;
+  margin-top: 10px;
 }
 
-#tabla-calendario th, #tabla-calendario td {
-  padding: 8px;
+#tabla-calendario th,
+#tabla-calendario td {
+  padding: 10px;
   border: 1px solid #e0d1c0;
+  text-align: center;
+  width: 14.2%;
 }
 
 #tabla-calendario td.hoy {
@@ -378,42 +138,60 @@ body {
   border-radius: 4px;
 }
 
-/* Menú inferior */
+/* ======== MENÚ INFERIOR ======== */
 .cuadro-opciones {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
   bottom: 20px;
   background: #fff8f0;
-  padding: 14px 18px;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
-  z-index: 9999;
-  border: 2px solid rgba(165,135,110,0.9);
+  padding: 12px 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+  z-index: 999;
 }
 
-/* Botones */
-.boton-opcion, .boton, button {
-  display: block;
-  width: 100%;
-  margin: 8px 0;
-  padding: 12px;
+.cuadro-opciones .boton-opcion {
+  text-decoration: none;
   background: #d1b7a1;
   color: white;
-  text-decoration: none;
-  border: none;
+  padding: 10px 14px;
   border-radius: 10px;
   font-weight: bold;
-  text-align: center;
-  cursor: pointer;
   transition: background 0.3s ease;
 }
 
-.boton-opcion:hover, .boton:hover, button:hover {
+.cuadro-opciones .boton-opcion:hover {
   background: #b59b83;
 }
 
-  
+/* ======== RESPONSIVE ======== */
+@media (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+
+  .profile-pic {
+    width: 90px;
+    height: 90px;
+  }
+
+  #month-year {
+    font-size: 1.2rem;
+  }
+
+  .cuadro-opciones {
+    flex-direction: column;
+    gap: 10px;
+    bottom: 10px;
+    width: 90%;
+  }
+
+  .cuadro-opciones .boton-opcion {
+    width: 100%;
+  }
+}
