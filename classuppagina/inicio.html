@@ -6,6 +6,7 @@
   <title>Calendario Social</title>
   <link rel="stylesheet" href="css/inicio.css">
   <style>
+    /* 🔔 Estilos agregados para campana y comentarios */
     .campana-btn {
       background: none;
       border: none;
@@ -14,11 +15,37 @@
       margin-left: auto;
       transition: transform 0.2s ease;
     }
-    .campana-btn:hover { transform: scale(1.2); }
-    .comentarios-section { border-top: 1px solid #ccc; padding-top: 8px; margin-top: 10px; }
-    .comentarios-section textarea { width: 100%; resize: none; margin-top: 5px; border-radius: 5px; padding: 5px; }
-    .comentarios-section button { margin-top: 5px; background-color: #7a5c3d; color: #fff; border: none; border-radius: 5px; padding: 4px 10px; cursor: pointer; }
-    .comentario { background-color: #f0f0f0; color: #000; border-radius: 6px; padding: 5px 8px; margin-top: 5px; }
+    .campana-btn:hover {
+      transform: scale(1.2);
+    }
+    .comentarios-section {
+      border-top: 1px solid #ccc;
+      padding-top: 8px;
+      margin-top: 10px;
+    }
+    .comentarios-section textarea {
+      width: 100%;
+      resize: none;
+      margin-top: 5px;
+      border-radius: 5px;
+      padding: 5px;
+    }
+    .comentarios-section button {
+      margin-top: 5px;
+      background-color: #7a5c3d;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 4px 10px;
+      cursor: pointer;
+    }
+    .comentario {
+      background-color: #f0f0f0;
+      color: #000;
+      border-radius: 6px;
+      padding: 5px 8px;
+      margin-top: 5px;
+    }
   </style>
 </head>
 <body>
@@ -28,22 +55,24 @@
       <h1 class="app-title">ClassUp</h1>
     </div>
   </header>
-
   <div class="container">
+    
+    <!-- Encabezado -->
     <header class="profile-section">
       <div class="profile-card">
         <img id="foto-perfil-inicio" src="https://via.placeholder.com/100" alt="fotoPerfil" class="profile-pic">
         <div class="profile-info">
           <h2>Mi Calendario Social</h2>
-          <p>@<?= htmlspecialchars($usuario ?? "Invitado") ?></p>
         </div>
       </div>
     </header>
 
+    <!-- Botón para agregar recordatorio -->
     <section class="calendar-section">
       <h3>Recordatorios recientes</h3>
       <button class="event-btn" onclick="toggleCalendario()">➕ Nuevo recordatorio</button>
       
+      <!-- Calendario oculto -->
       <div id="calendarioContainer" style="display:none; margin-top:15px;">
         <div id="calendar-header">
           <button id="prev-month"><--</button>
@@ -51,124 +80,181 @@
           <button id="next-month">--></button>
         </div>
         <div id="calendar"></div>
-
-        <!-- Formulario que guarda eventos -->
-        <form id="event-form" method="POST">
-          <input type="text" name="titulo" id="event-title" placeholder="Título del evento" required>
-          <input type="date" name="fecha" id="event-date" required>
-          <input type="time" name="hora" id="event-time">
-          <input type="text" name="descripcion" id="event-desc" placeholder="Descripción (opcional)">
-          <button type="submit" id="add-event">Agregar evento</button>
-        </form>
+        <div id="event-form">
+          <input type="text" id="event-title" placeholder="Título del evento">
+          <input type="date" id="event-date">
+          <input type="time" id="event-time">
+          <input type="text" id="event-desc" placeholder="Descripción (opcional)">
+          <button id="add-event">Agregar evento</button>
+        </div>
       </div>
 
+      <!-- Contenedor de publicaciones -->
       <div id="postsContainer">
-        <?php if (empty($eventos)): ?>
-          <p class="empty-msg">Todavía no hay recordatorios 📭</p>
-        <?php else: ?>
-          <?php foreach ($eventos as $ev): ?>
-            <div class="post">
-              <div class="post-header">
-                <img src="<?= htmlspecialchars($_SESSION['fotoPerfil'] ?? 'https://via.placeholder.com/50') ?>" class="avatar" alt="avatar">
-                <div>
-                  <strong><?= htmlspecialchars($ev['titulo']) ?></strong>
-                  <p class="post-date">📅 <?= htmlspecialchars($ev['fecha']) ?> ⏰ <?= htmlspecialchars($ev['hora'] ?? "Sin hora") ?></p>
-                </div>
-                <button class="campana-btn" onclick="activarCampana()">🔔</button>
-              </div>
-              <div class="post-content">
-                <p><?= htmlspecialchars($ev['descripcion'] ?? "Sin descripción") ?></p>
-              </div>
-              <div class="comentarios-section">
-                <h4>Comentarios</h4>
-                <div class="lista-comentarios"></div>
-                <textarea placeholder="Escribe un comentario..."></textarea>
-                <button onclick="agregarComentario(this)">Comentar</button>
-              </div>
-            </div>
-          <?php endforeach; ?>
-        <?php endif; ?>
+        <p class="empty-msg">Todavía no hay recordatorios 📭</p>
       </div>
     </section>
-
+    
+    <!-- Cuadro inferior fijo -->
     <div class="cuadro-opciones">
-      <a href="inicio.php" class="boton-opcion">🏠 Inicio</a>
+      <a href="inicio.html" class="boton-opcion">🏠 Inicio</a>
       <a href="busqueda.html" class="boton-opcion">🔍 Buscar</a>
       <a href="perfil.html" class="boton-opcion">👤 Perfil</a>
       <a href="amigos.html" class="boton-opcion">👥 Amigos</a>
       <a href="configuracion.html" class="boton-opcion">⚙️ Ajustes</a>
     </div>
-  </div>
 
-  <script>
-    const calendarioContainer = document.getElementById("calendarioContainer");
-    function toggleCalendario() {
-      calendarioContainer.style.display =
-        calendarioContainer.style.display === "none" ? "block" : "none";
-      renderCalendar();
-    }
+    <script>
+      const calendarioContainer = document.getElementById("calendarioContainer");
+      const postsContainer = document.getElementById("postsContainer");
 
-    // --- Calendario ---
-    const calendar = document.getElementById("calendar");
-    const monthYear = document.getElementById("month-year");
-    let currentDate = new Date();
-
-    function renderCalendar() {
-      calendar.innerHTML = "";
-      const year = currentDate.getFullYear();
-      const month = currentDate.getMonth();
-      const firstDay = new Date(year, month, 1).getDay();
-      const lastDate = new Date(year, month + 1, 0).getDate();
-      const today = new Date();
-      const months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
-      monthYear.textContent = `${months[month]} ${year}`;
-
-      for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
-        const empty = document.createElement("div");
-        calendar.appendChild(empty);
+      function toggleCalendario() {
+        calendarioContainer.style.display = 
+          calendarioContainer.style.display === "none" ? "block" : "none";
+        renderCalendar();
       }
 
-      for (let d = 1; d <= lastDate; d++) {
-        const day = document.createElement("div");
-        day.textContent = d;
-        day.classList.add("day");
-        if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
-          day.classList.add("today");
+      // --- Lógica de calendario ---
+      const calendar = document.getElementById("calendar");
+      const monthYear = document.getElementById("month-year");
+      let currentDate = new Date();
+
+      function renderCalendar() {
+        calendar.innerHTML = "";
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        const firstDay = new Date(year, month, 1).getDay();
+        const lastDate = new Date(year, month + 1, 0).getDate();
+        const today = new Date();
+
+        const months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio",
+                        "Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+        monthYear.textContent = `${months[month]} ${year}`;
+
+        for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
+          const empty = document.createElement("div");
+          calendar.appendChild(empty);
         }
-        calendar.appendChild(day);
+
+        for (let d = 1; d <= lastDate; d++) {
+          const day = document.createElement("div");
+          day.textContent = d;
+          day.classList.add("day");
+          if (d === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+            day.classList.add("today");
+          }
+          calendar.appendChild(day);
+        }
       }
-    }
 
-    document.getElementById("prev-month").onclick = () => {
-      currentDate.setMonth(currentDate.getMonth() - 1);
-      renderCalendar();
-    };
-    document.getElementById("next-month").onclick = () => {
-      currentDate.setMonth(currentDate.getMonth() + 1);
-      renderCalendar();
-    };
+      document.getElementById("prev-month").onclick = () => {
+        currentDate.setMonth(currentDate.getMonth() - 1);
+        renderCalendar();
+      };
+      document.getElementById("next-month").onclick = () => {
+        currentDate.setMonth(currentDate.getMonth() + 1);
+        renderCalendar();
+      };
 
-    function activarCampana() {
-      alert("Recordatorio activado 🔔");
-    }
+      // --- Publicar evento con campana y comentarios ---
+      document.getElementById("add-event").onclick = () => {
+        const title = document.getElementById("event-title").value;
+        const date = document.getElementById("event-date").value;
+        const time = document.getElementById("event-time").value;
+        const desc = document.getElementById("event-desc").value;
 
-    function agregarComentario(btn) {
-      const section = btn.closest(".comentarios-section");
-      const textarea = section.querySelector("textarea");
-      const lista = section.querySelector(".lista-comentarios");
-      const texto = textarea.value.trim();
-      if (texto === "") {
-        alert("Escribe un comentario antes de enviar.");
-        return;
+        if (!title || !date) {
+          alert("Completa al menos título y fecha.");
+          return;
+        }
+
+        const emptyMsg = postsContainer.querySelector(".empty-msg");
+        if (emptyMsg) emptyMsg.remove();
+
+        const post = document.createElement("div");
+        post.classList.add("post");
+
+        const postId = "post_" + Date.now();
+
+        post.innerHTML = `
+          <div class="post-header">
+            <img src="${getAvatarSrc()}" class="avatar" alt="avatar">
+            <div>
+              <strong>${title}</strong>
+              <p class="post-date">📅 ${date} ⏰ ${time || "Sin hora"}</p>
+            </div>
+            <button class="campana-btn" onclick="activarCampana('${postId}', this)">🔔</button>
+          </div>
+          <div class="post-content">
+            <p>${desc || "Sin descripción"}</p>
+          </div>
+          <div class="comentarios-section" id="comentarios_${postId}">
+            <h4>Comentarios</h4>
+            <div class="lista-comentarios"></div>
+            <textarea placeholder="Escribe un comentario..."></textarea>
+            <button onclick="agregarComentario('${postId}')">Comentar</button>
+          </div>
+        `;
+        postsContainer.prepend(post);
+
+        document.getElementById("event-title").value = "";
+        document.getElementById("event-date").value = "";
+        document.getElementById("event-time").value = "";
+        document.getElementById("event-desc").value = "";
+        calendarioContainer.style.display = "none";
+      };
+
+      // --- Foto de perfil ---
+      function applyFotoPerfil() {
+        const fotoEl = document.getElementById('foto-perfil-inicio');
+        if (!fotoEl) return;
+        try {
+          fotoEl.src = getAvatarSrc();
+        } catch (e) {
+          const fotoPerfil = localStorage.getItem('fotoPerfil');
+          fotoEl.src = fotoPerfil || 'https://via.placeholder.com/100';
+        }
       }
-      const nuevo = document.createElement("p");
-      nuevo.classList.add("comentario");
-      nuevo.textContent = texto;
-      lista.appendChild(nuevo);
-      textarea.value = "";
-    }
 
-    renderCalendar();
-  </script>
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', applyFotoPerfil);
+      } else {
+        applyFotoPerfil();
+      }
+
+      function getAvatarSrc() {
+        return localStorage.getItem('fotoPerfil') || 'https://via.placeholder.com/50';
+      }
+
+      // --- 🔔 Activar campana ---
+      function activarCampana(postId, btn) {
+        btn.textContent = "🔕";
+        btn.disabled = true;
+        alert("Recordatorio activado 🔔");
+      }
+
+      // --- 💬 Agregar comentario ---
+      function agregarComentario(postId) {
+        const post = document.getElementById("comentarios_" + postId);
+        const textarea = post.querySelector("textarea");
+        const lista = post.querySelector(".lista-comentarios");
+        const texto = textarea.value.trim();
+
+        if (texto === "") {
+          alert("Escribe un comentario antes de enviar.");
+          return;
+        }
+
+        const nuevoComentario = document.createElement("p");
+        nuevoComentario.classList.add("comentario");
+        nuevoComentario.textContent = texto;
+        lista.appendChild(nuevoComentario);
+
+        textarea.value = "";
+      }
+
+      renderCalendar();
+    </script>
+  </div>
 </body>
 </html>
