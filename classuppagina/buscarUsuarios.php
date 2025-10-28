@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-$conexion = new mysqli("localhost", "root", "", "nombre_de_tu_base");
+$conexion = new mysqli("localhost", "root", "", "paginaclassup");
 
 // Verificar conexión
 if ($conexion->connect_error) {
@@ -11,7 +11,7 @@ $texto = isset($_GET['q']) ? $conexion->real_escape_string($_GET['q']) : '';
 
 // Buscar usuarios que coincidan con el texto (excepto el usuario actual)
 $usuarioActual = isset($_GET['usuarioActual']) ? $_GET['usuarioActual'] : '';
-$sql = "SELECT nombre, usuario, foto FROM usuarios 
+$sql = "SELECT id, usuario, fotoPerfil FROM users 
         WHERE (nombre LIKE '%$texto%' OR usuario LIKE '%$texto%') 
         AND usuario != '$usuarioActual'";
 
