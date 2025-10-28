@@ -36,35 +36,32 @@
   </div>
 
   <script>
-    // Datos de ejemplo
-    const usuarios = [
-      {nombre: "Julieta Luján", usuario: "lujanjulieta", foto: "foto1.jpg"},
-      {nombre: "Gere Danilo", usuario: "gere123", foto: "foto2.jpg"},
-      {nombre: "Ana Pérez", usuario: "ana123", foto: "foto3.jpg"}
-    ];
-
+    // Variables principales
     const usuarioActual = JSON.parse(localStorage.getItem("usuarioActual")) || {usuario: "invitado"};
     const searchInput = document.getElementById('search-input');
     const listaUsuarios = document.getElementById('lista-usuarios');
-
-    // Recuperar amigos del usuario actual
     const clave = `amigos_${usuarioActual.usuario}`;
-    const amigos = JSON.parse(localStorage.getItem(clave)) || [];
+    let amigos = JSON.parse(localStorage.getItem(clave)) || [];
 
-    function renderUsuarios(texto = '') {
-      const resultados = usuarios.filter(u => 
-        u.nombre.toLowerCase().includes(texto) || u.usuario.toLowerCase().includes(texto)
-      );
+    // Función para obtener usuarios de la base de datos
+    async function fetchUsuarios(texto = '') {
+      const response = await fetch(`buscarUsuarios.php?q=${encodeURIComponent(texto)}&usuarioActual=${usuarioActual.usuario}`);
+      const data = await response.json();
+      return data;
+    }
+
+    // Función para mostrar los usuarios en pantalla
+    async function renderUsuarios(texto = '') {
+      const usuarios = await fetchUsuarios(texto);
 
       listaUsuarios.innerHTML = '';
-      if(resultados.length === 0){
+      if(usuarios.length === 0){
         listaUsuarios.innerHTML = '<p class="empty-msg">No se encontraron usuarios.</p>';
       } else {
-        resultados.forEach(u => {
+        usuarios.forEach(u => {
           const div = document.createElement('div');
           div.classList.add('usuario-card');
 
-          // Ver si ya es amigo
           const esAmigo = amigos.some(a => a.usuario === u.usuario);
           const btnAgregar = esAmigo ? '' : `<button class="add-btn">Agregar</button>`;
 
@@ -80,7 +77,6 @@
           `;
           listaUsuarios.appendChild(div);
 
-          // Evento de agregar amigo
           if(!esAmigo){
             div.querySelector('.add-btn').addEventListener('click', () => {
               amigos.push(u);
@@ -92,9 +88,11 @@
       }
     }
 
+    // Evento para búsqueda en tiempo real
     searchInput.addEventListener('input', () => renderUsuarios(searchInput.value));
 
-    renderUsuarios(); // Render inicial
+    // Render inicial
+    renderUsuarios();
   </script>
 </body>
 </html>
