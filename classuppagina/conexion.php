@@ -1,18 +1,12 @@
 <?php
-// Datos de conexión
-$host = "localhost";
-$usuario = "root";
-$clave = ""; // Si usás XAMPP, dejar vacío. Si usás otro, poner la contraseña.
-$bd = "paginaclassup";
+$servername = "localhost";
+$username = "root";
+$password = "";
+$database = "paginaclassup"; // 👈 este es el nombre correcto
 
-// Crear conexión
-$conexion = new mysqli($host, $usuario, $clave, $bd);
+$conn = new mysqli($servername, $username, $password, $database);
 
-// Verificar conexión
-if ($conexion->connect_error) {
-    die("Error de conexión: " . $conexion->connect_error);
-} else {
-    // Opcional: mostrar mensaje de éxito (solo para pruebas)
-    // echo "Conexión exitosa a la base de datos";
+if ($conn->connect_error) {
+  die("Error de conexión: " . $conn->connect_error);
 }
 ?>

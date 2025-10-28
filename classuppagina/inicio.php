@@ -74,7 +74,7 @@ $stmt->close();
 
       <!-- FORMULARIO oculto -->
       <div id="calendarioContainer">
-        <form id="event-form" method="POST">
+        <form id="event-form" method="POST" action="">
           <input type="text" name="titulo" placeholder="Título del evento" required>
           <input type="date" name="fecha" required>
           <input type="time" name="hora">

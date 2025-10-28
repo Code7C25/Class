@@ -5,7 +5,7 @@ session_start();
 $host = "localhost";
 $user = "root";
 $pass = "";
-$db = "classup";
+$db = "paginaclassup";
 
 $conn = new mysqli($host, $user, $pass, $db);
 if ($conn->connect_error) {
@@ -21,7 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "Completa todos los campos.";
     } else {
         // Buscar usuario en la base de datos
-        $stmt = $conn->prepare("SELECT password, fotoPerfil FROM users WHERE usuario = ?");
+        $sql = "SELECT password, fotoPerfil FROM users WHERE usuario = ?";
+        $stmt = $conn->prepare($sql);
+
+        if ($stmt === false) {
+            die("Error en la consulta SQL: " . $conn->error);
+        }
+
         $stmt->bind_param("s", $usuario);
         $stmt->execute();
         $stmt->store_result();
@@ -32,12 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Verificar contraseña
             if (password_verify($clave, $passwordHash)) {
-                // Guardar en localStorage y redirigir a perfil.html
-                echo "<script>
-                    localStorage.setItem('usuario', '".addslashes($usuario)."');
-                    localStorage.setItem('fotoPerfil', '".addslashes($fotoPerfil)."');
-                    window.location.href = 'perfil.html';
-                </script>";
+                // Guardar datos en la sesión
+                $_SESSION['usuario'] = $usuario;
+                $_SESSION['fotoPerfil'] = $fotoPerfil;
+
+                // Redirigir a inicio.php
+                header("Location: inicio.php");
                 exit;
             } else {
                 $error = "Contraseña incorrecta.";
@@ -82,18 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </p>
     </div>
 </div>
-
-<script>
-    // Validación simple en cliente
-    document.getElementById('loginForm').addEventListener('submit', function (e) {
-        const usuario = document.getElementById('usuario').value.trim();
-        const clave = document.getElementById('clave').value.trim();
-        if (!usuario || !clave) {
-            e.preventDefault();
-            alert('Por favor completa todos los campos.');
-        }
-    });
-</script>
 
 </body>
 </html>
