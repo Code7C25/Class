@@ -43,11 +43,17 @@ while($fila = $result->fetch_assoc()){
         <?php foreach($amigos as $a): ?>
           <div class="usuario-card">
             <div class="usuario-info">
-              <img src="<?= $a['fotoPerfil'] ?>" class="usuario-foto" alt="Foto de <?= $a['usuario'] ?>">
+              <img src="<?= htmlspecialchars($a['fotoPerfil']) ?>" class="amigo-foto" alt="Foto de <?= htmlspecialchars($a['usuario']) ?>">
               <div>
-                <p class="usuario-nombre">@<?= $a['usuario'] ?></p>
+                <p class="usuario-nombre">@<?= htmlspecialchars($a['usuario']) ?></p>
               </div>
             </div>
+
+            <!-- 🔹 Botón que lleva al perfil del amigo -->
+            <button class="ver-perfil-btn" 
+              onclick="window.location.href='perfil_amigo.php?usuario=<?= urlencode($a['usuario']) ?>'">
+              👀 Ver perfil
+            </button>
           </div>
         <?php endforeach; ?>
       <?php endif; ?>
