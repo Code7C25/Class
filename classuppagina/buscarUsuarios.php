@@ -1,27 +1,22 @@
 <?php
 header('Content-Type: application/json');
-$conexion = new mysqli("localhost", "root", "", "paginaclassup");
+include 'conexion.php'; // tu conexión a la base de datos
 
-// Verificar conexión
-if ($conexion->connect_error) {
-    die(json_encode([]));
-}
+$texto = $_GET['q'] ?? '';
+$usuarioActual = $_GET['usuarioActual'] ?? '';
 
-$texto = isset($_GET['q']) ? $conexion->real_escape_string($_GET['q']) : '';
+// Preparar consulta segura
+$sql = "SELECT usuario, fotoPerfil FROM users 
+        WHERE usuario LIKE ? AND usuario != ?";
+$stmt = $conn->prepare($sql);
+$busqueda = "%$texto%";
+$stmt->bind_param("ss", $busqueda, $usuarioActual);
+$stmt->execute();
+$result = $stmt->get_result();
 
-// Buscar usuarios que coincidan con el texto (excepto el usuario actual)
-$usuarioActual = isset($_GET['usuarioActual']) ? $_GET['usuarioActual'] : '';
-$sql = "SELECT id, usuario, fotoPerfil FROM users 
-        WHERE (nombre LIKE '%$texto%' OR usuario LIKE '%$texto%') 
-        AND usuario != '$usuarioActual'";
-
-$resultado = $conexion->query($sql);
 $usuarios = [];
-
-if ($resultado) {
-    while($fila = $resultado->fetch_assoc()) {
-        $usuarios[] = $fila;
-    }
+while($fila = $result->fetch_assoc()) {
+    $usuarios[] = $fila;
 }
 
 echo json_encode($usuarios);
