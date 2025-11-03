@@ -21,7 +21,7 @@ $datos = $result->fetch_assoc();
 
 // Procesar formulario
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nuevoUsuario = $_POST['usuario'];
+    $nuevoUsuario = trim($_POST['usuario']);
 
     // Manejo de foto
     if (isset($_FILES['foto']) && $_FILES['foto']['error'] === 0) {
@@ -32,13 +32,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $rutaFoto = $datos['fotoPerfil'];
     }
 
-    // Actualizar en la base de datos
-    $sqlUpdate = "UPDATE users SET usuario=?, fotoPerfil=? WHERE usuario=?";
-    if (!$stmtUpdate = $conn->prepare($sqlUpdate)) {
-        die("Error en UPDATE: " . $conn->error);
-    }
-    $stmtUpdate->bind_param("sss", $nuevoUsuario, $rutaFoto, $usuario);
+    $usuarioViejo = $usuario;
+
+    // --- Actualizar users ---
+    $stmtUpdate = $conn->prepare("UPDATE users SET usuario=?, fotoPerfil=? WHERE usuario=?");
+    $stmtUpdate->bind_param("sss", $nuevoUsuario, $rutaFoto, $usuarioViejo);
     $stmtUpdate->execute();
+    $stmtUpdate->close();
+
+    // --- Actualizar recordatorios ---
+    $stmtUpdate = $conn->prepare("UPDATE recordatorios SET usuario=? WHERE usuario=?");
+    $stmtUpdate->bind_param("ss", $nuevoUsuario, $usuarioViejo);
+    $stmtUpdate->execute();
+    $stmtUpdate->close();
+
+    // --- Actualizar amigos ---
+    $stmtUpdate = $conn->prepare("UPDATE amigos SET usuario=? WHERE usuario=?");
+    $stmtUpdate->bind_param("ss", $nuevoUsuario, $usuarioViejo);
+    $stmtUpdate->execute();
+    $stmtUpdate->close();
+
+    $stmtUpdate = $conn->prepare("UPDATE amigos SET amigo=? WHERE amigo=?");
+    $stmtUpdate->bind_param("ss", $nuevoUsuario, $usuarioViejo);
+    $stmtUpdate->execute();
+    $stmtUpdate->close();
+
+    // --- Actualizar comentarios ---
+    $stmtUpdate = $conn->prepare("UPDATE comentarios SET usuario=? WHERE usuario=?");
+    $stmtUpdate->bind_param("ss", $nuevoUsuario, $usuarioViejo);
+    $stmtUpdate->execute();
+    $stmtUpdate->close();
 
     // Actualizar sesión y localStorage
     $_SESSION['usuario'] = $nuevoUsuario;
@@ -46,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         localStorage.setItem('usuario', '" . addslashes($nuevoUsuario) . "');
         localStorage.setItem('fotoPerfil', '" . addslashes($rutaFoto) . "');
         alert('Perfil actualizado correctamente');
-        window.location='perfil.html';
+        window.location='perfil.php';
     </script>";
     exit;
 }
@@ -57,29 +80,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Editar Perfil - ClassUp</title>
-    <link rel="stylesheet" href="css/perfil.css">
+    <link rel="stylesheet" href="css/editar_perfil.css">
 </head>
 <body>
 <div class="container">
     <div class="profile-section">
-        <div class="profile-card">
+        <div class="profile-card recuadro-editar">
             <img src="<?= htmlspecialchars($datos['fotoPerfil'] ?: 'foto.jpg') ?>" alt="Foto actual" class="profile-pic">
             <div class="profile-info">
                 <h2>@<?= htmlspecialchars($usuario) ?></h2>
                 <p>Editar perfil</p>
             </div>
+
+            <form method="post" enctype="multipart/form-data" class="form-editar">
+                <label for="usuario">Nuevo nombre de usuario:</label>
+                <input type="text" id="usuario" name="usuario" value="<?= htmlspecialchars($datos['usuario']) ?>" required>
+
+                <label for="foto">Nueva foto de perfil:</label>
+                <input type="file" name="foto" id="foto" accept="image/*">
+
+                <button type="submit" class="boton-opcion">💾 Guardar cambios</button>
+                <a href="perfil.php" class="boton-opcion boton-volver">↩ Volver</a>
+            </form>
         </div>
-
-        <form method="post" enctype="multipart/form-data" style="margin-top:20px;">
-            <label for="usuario">Nuevo nombre de usuario:</label><br>
-            <input type="text" id="usuario" name="usuario" value="<?= htmlspecialchars($datos['usuario']) ?>" required style="margin-bottom:10px; padding:6px; border-radius:6px; border:1px solid #b59b83;"><br>
-
-            <label for="foto">Nueva foto de perfil:</label><br>
-            <input type="file" name="foto" id="foto" accept="image/*" style="margin-bottom:10px;"><br>
-
-            <button type="submit" class="boton-opcion">💾 Guardar cambios</button>
-            <a href="perfil.html" class="boton-opcion" style="background:#b59b83;">↩ Volver</a>
-        </form>
     </div>
 </div>
 </body>

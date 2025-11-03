@@ -1,0 +1,94 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #f5e8dc;
+    color: #5c3a1d;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-section {
+    width: 100%;
+}
+
+.profile-card {
+    background: #fff8f0;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.recuadro-editar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #b59b83;
+}
+
+.profile-info h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.profile-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #8b6b4a;
+}
+
+.form-editar {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.form-editar label {
+    text-align: left;
+    font-weight: 500;
+}
+
+.form-editar input[type="text"],
+.form-editar input[type="file"] {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #b59b83;
+    width: 100%;
+}
+
+.boton-opcion {
+    background: #f5e8dc;
+    border: 1px solid #b59b83;
+    border-radius: 8px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+    text-decoration: none;
+    color: #5c3a1d;
+}
+
+.boton-opcion:hover {
+    background: #e4d2bc;
+}
+
+.boton-volver {
+    background: #b59b83;
+    color: #fff;
+}

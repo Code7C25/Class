@@ -86,9 +86,9 @@ $recordatorios = $result->fetch_all(MYSQLI_ASSOC);
 
 <!-- Menú inferior -->
 <div class="cuadro-opciones">
-    <a href="perfil.php" class="boton-opcion">👤 Ver perfil</a>
-    <a href="cerrarsesion.php" class="boton-opcion">🚪 Cerrar sesión</a>
     <a href="inicio.php" class="boton-opcion">🏠 Inicio</a>
+    <a href="cerrarsesion.html" class="boton-opcion">🚪 Cerrar sesión</a>
+    <a href="configuracion.html" class="boton-opcion">⚙️ Ajustes</a>
 </div>
 
 <script>
