@@ -2,71 +2,106 @@ body {
   font-family: 'Segoe UI', sans-serif;
   background: #f5e8dc;
   color: #5c3a1d;
-  padding: 20px;
   margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
+  padding: 40px 20px;
 }
 
+/* Contenedor general */
 .container {
-  max-width: 50px;
-  width: 50%;
+  width: 100%;
+  max-width: 800px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 25px;
 }
 
+/* Título */
+h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Sección de perfil */
 .profile-section {
   background: #fff8f0;
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 30px;
+  padding: 25px;
+  border-radius: 16px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 50%;
+  width: 100%;
   text-align: center;
 }
 
-.amigo-card {
+/* --- Tarjeta de usuario --- */
+.usuario-card {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 15px;
   background: #fff8f0;
-  border-radius: 12px;
-  padding: 10px 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 14px;
+  padding: 16px 22px;
+  margin-bottom: 16px;
   width: 100%;
-  max-width: 1000px;
-  cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  max-width: 700px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform .2s ease, background-color .2s ease;
 }
 
-.amigo-card:hover {
+.usuario-card:hover {
   transform: scale(1.02);
   background: #d1b7a1;
   color: white;
 }
 
+.usuario-info {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
 .amigo-foto {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   object-fit: cover;
+  border: 2px solid #c9a67b;
 }
 
-.amigo-info h3 {
-  margin: 0;
-  font-size: 20px;
-}
-
-.amigo-info p {
-  margin: 3px 0 0;
-  font-size: 14px;
+.usuario-nombre {
+  font-weight: 600;
+  font-size: 1.1rem;
   color: #5c3a1d;
 }
 
+/* Botón ver perfil */
+.ver-perfil-btn {
+  background-color: #a5795b;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.ver-perfil-btn:hover {
+  background-color: #8f6645;
+  transform: scale(1.05);
+}
+
+/* Mensaje vacío */
 .empty-msg {
   text-align: center;
   color: #777;
@@ -74,40 +109,33 @@ body {
   margin-top: 20px;
 }
 
-.divider {
-  margin: 40px 0 20px;
-  border: none;
-  border-top: 2px dashed #d1b7a1;
-}
-
-/* --- Cuadro de accesos rápidos --- */
+/* --- Menú inferior --- */
 .cuadro-opciones {
-  position: fixed !important;
-  left: 50% !important;
-  transform: translateX(-50%) !important;
-  bottom: 20px !important;
-  background: #fff8f0 !important;
-  padding: 14px 18px !important;
-  border-radius: 12px !important;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.18) !important;
-  z-index: 9999 !important;
-  border: 2px solid rgba(165, 135, 110, 0.9) !important;
-  max-width: 460px !important;
-  width: auto !important;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 25px;
+  background: #fff8f0;
+  padding: 14px 18px;
+  border-radius: 14px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+  border: 2px solid rgba(165, 135, 110, 0.9);
   display: flex;
-  gap: 12px;
+  gap: 20px;
   align-items: center;
   justify-content: center;
+  z-index: 999;
 }
 
 .cuadro-opciones .boton-opcion {
   text-decoration: none;
   background: transparent;
   border: none;
-  color: #5c3a1d !important;
+  color: #5c3a1d;
   font-weight: 600;
-  padding: 6px 8px;
-  border-radius: 8px;
+  font-size: 1rem;
+  padding: 8px 10px;
+  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -115,32 +143,33 @@ body {
   background: #f2e6dd;
 }
 
-/* Responsive */
-@media (max-width: 420px) {
+/* --- Responsivo --- */
+@media (max-width: 600px) {
+  .usuario-card {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .amigo-foto {
+    width: 90px;
+    height: 90px;
+  }
+
+  .usuario-nombre {
+    font-size: 1.2rem;
+  }
+
+  .ver-perfil-btn {
+    padding: 8px 14px;
+    font-size: 1rem;
+  }
+
   .cuadro-opciones {
     bottom: 12px;
     padding: 10px 12px;
-    gap: 8px;
-    max-width: 95%;
+    gap: 10px;
+    width: 95%;
   }
-  .amigo-foto {
-    width: 80px;
-    height: 80px;
-  }
-}
-.ver-perfil-btn {
-  background-color: #a5795b;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background-color 0.2s ease, transform 0.2s ease;
-}
-
-.ver-perfil-btn:hover {
-  background-color: #8f6645;
-  transform: scale(1.05);
 }

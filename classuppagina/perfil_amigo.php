@@ -13,7 +13,7 @@ if (!$conn) {
     die("Error de conexión: " . mysqli_connect_error());
 }
 
-/* ========== Obtener datos del amigo (solo columnas que existen en tu tabla users) ========== */
+/* ========== Obtener datos del amigo ========== */
 $sql = "SELECT usuario, fotoPerfil FROM users WHERE usuario = ?";
 $stmt = $conn->prepare($sql);
 if (!$stmt) {
@@ -27,13 +27,12 @@ if ($result->num_rows === 0) {
 }
 $amigo = $result->fetch_assoc();
 
-/* ========== Intentar obtener recordatorios con columnas esperadas ========== */
+/* ========== Obtener recordatorios ========== */
 $recordatorios = [];
 $sqlRec = "SELECT titulo, descripcion, fecha, hora FROM recordatorios WHERE usuario = ? ORDER BY fecha DESC, hora DESC";
 $stmtRec = $conn->prepare($sqlRec);
 
 if ($stmtRec) {
-    // Consulta estándar funcionó
     $stmtRec->bind_param("s", $amigoUsuario);
     $stmtRec->execute();
     $resRec = $stmtRec->get_result();
@@ -41,8 +40,6 @@ if ($stmtRec) {
         $recordatorios[] = $r;
     }
 } else {
-    // Fallback: la tabla recordatorios o las columnas no coinciden.
-    // Intentamos recuperar todas las columnas disponibles para ese usuario.
     $sqlRec2 = "SELECT * FROM recordatorios WHERE usuario = ? ORDER BY id DESC";
     $stmtRec2 = $conn->prepare($sqlRec2);
     if ($stmtRec2) {
@@ -53,7 +50,6 @@ if ($stmtRec) {
             $recordatorios[] = $r;
         }
     } else {
-        // No existe tabla recordatorios o error grave: lo registramos y seguimos (se mostrará mensaje).
         error_log("Error preparar recordatorios: " . $conn->error);
     }
 }
@@ -80,7 +76,7 @@ if ($stmtRec) {
 
     <h2>@<?= htmlspecialchars($amigo['usuario']) ?></h2>
 
-    <div class="info-extra">
+    <div class="recordatorios">
       <h3>📅 Recordatorios</h3>
 
       <?php if (count($recordatorios) === 0): ?>
@@ -89,24 +85,18 @@ if ($stmtRec) {
         <?php foreach ($recordatorios as $rec): ?>
           <div class="recordatorio-card">
             <?php
-            // Si la fila tiene 'titulo' y 'descripcion' (estructura esperada), mostramos formateado
-            if (isset($rec['titulo']) || isset($rec['descripcion']) || isset($rec['fecha']) || isset($rec['hora'])) {
-                $titulo = $rec['titulo'] ?? '(sin título)';
-                $descripcion = $rec['descripcion'] ?? '';
-                $fecha = $rec['fecha'] ?? '';
-                $hora = $rec['hora'] ?? '';
-                echo "<h4>" . htmlspecialchars($titulo) . "</h4>";
-                if ($descripcion !== '') echo "<p>" . nl2br(htmlspecialchars($descripcion)) . "</p>";
-                if ($fecha || $hora) echo "<small>📅 " . htmlspecialchars(trim("$fecha $hora")) . "</small>";
-            } else {
-                // Fallback: la fila tiene otros campos; listamos clave:valor
-                echo "<ul>";
-                foreach ($rec as $k => $v) {
-                    echo "<li><strong>" . htmlspecialchars($k) . ":</strong> " . htmlspecialchars($v) . "</li>";
-                }
-                echo "</ul>";
-            }
+              $titulo = $rec['titulo'] ?? '(sin título)';
+              $descripcion = $rec['descripcion'] ?? '';
+              $fecha = $rec['fecha'] ?? '';
+              $hora = $rec['hora'] ?? '';
             ?>
+            <h4><?= htmlspecialchars($titulo) ?></h4>
+            <?php if ($descripcion !== ''): ?>
+              <p><?= nl2br(htmlspecialchars($descripcion)) ?></p>
+            <?php endif; ?>
+            <?php if ($fecha || $hora): ?>
+              <small>📅 <?= htmlspecialchars(trim("$fecha $hora")) ?></small>
+            <?php endif; ?>
           </div>
         <?php endforeach; ?>
       <?php endif; ?>
