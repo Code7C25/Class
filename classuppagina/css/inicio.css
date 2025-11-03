@@ -216,3 +216,71 @@
 .cuadro-opciones .boton-opcion:hover {
   background: #f2e6dd;
 }
+/* --- Recordatorios de amigos (mismo estilo que los tuyos) --- */
+.post.amigo {
+  border-left: 5px solid #d1b7a1; /* sutil diferencia */
+  background: #fff8f0;
+}
+
+.post .post-header .nombre-amigo {
+  color: #5c3a1d;
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* --- Comentarios --- */
+.comentarios {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+}
+
+.comentario {
+  background: #fff;
+  border-radius: 8px;
+  padding: 8px 10px;
+  margin-top: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.comentario strong {
+  color: #5c3a1d;
+  font-size: 0.9rem;
+}
+
+.comentario-form {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.comentario-form input[type="text"] {
+  flex: 1;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 6px 10px;
+  font-size: 0.9rem;
+}
+
+.comentario-form button {
+  background: #a5795b;
+  border: none;
+  color: white;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-weight: 600;
+}
+
+.comentario-form button:hover {
+  background: #8f6645;
+}
+
+/* --- Botón de activar recordatorio --- */
+.campana-btn.activo {
+  color: #d49d76;
+  transform: scale(1.2);
+}
