@@ -76,8 +76,12 @@ $stmt->close();
   .campana-btn { background: none; border: none; font-size: 22px; cursor: pointer; margin-left: auto; transition: transform 0.2s; }
   .campana-btn:hover { transform: scale(1.2); }
   #calendarioContainer { display: none; margin-top: 15px; }
+
+  /* Comentarios */
   .comentarios { margin-top: 10px; border-top: 1px solid #ddd; padding-top: 8px; }
-  .comentarios p { margin: 5px 0; }
+  .comentario-item { display: flex; align-items: center; gap: 8px; margin: 5px 0; }
+  .comentario-foto { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; border: 1px solid #b59b83; }
+  .comentarios p { margin: 0; }
   .comentarios form { display: flex; gap: 5px; margin-top: 5px; }
   .comentarios input[type="text"] { flex: 1; padding: 5px; border-radius: 6px; border: 1px solid #ccc; }
   .comentarios button { background: #fff8f0; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; }
@@ -148,7 +152,12 @@ $stmt->close();
             <?php
             $cid = $ev['id'];
 
-            $q_sql = "SELECT * FROM comentarios WHERE recordatorio_id = ? ORDER BY creado_en ASC";
+            // Traer comentarios junto con foto de perfil
+            $q_sql = "SELECT c.contenido, c.usuario, u.fotoPerfil 
+                      FROM comentarios c
+                      JOIN users u ON c.usuario = u.usuario
+                      WHERE c.recordatorio_id = ?
+                      ORDER BY c.creado_en ASC";
             $q = $conn->prepare($q_sql);
 
             if ($q) {
@@ -157,7 +166,10 @@ $stmt->close();
                 $rc = $q->get_result();
                 while ($c = $rc->fetch_assoc()):
             ?>
-                <p><strong>@<?= htmlspecialchars($c['usuario']) ?>:</strong> <?= htmlspecialchars($c['contenido']) ?></p>
+                <div class="comentario-item">
+                    <img src="<?= htmlspecialchars($c['fotoPerfil'] ?? 'https://via.placeholder.com/40') ?>" class="comentario-foto" alt="avatar">
+                    <p><strong>@<?= htmlspecialchars($c['usuario']) ?>:</strong> <?= htmlspecialchars($c['contenido']) ?></p>
+                </div>
             <?php
                 endwhile;
                 $q->close();
