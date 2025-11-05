@@ -3,11 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pantalla de Inicio</title>
+    <title>Pantalla de Inicio - ClassUp</title>
+
+    <!-- Tu CSS -->
     <link rel="stylesheet" href="css/index.css">
+
+    <!-- Manifest PWA -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Color de la app en celular -->
+    <meta name="theme-color" content="#5c3a1d">
+
+    <!-- Registrar Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('service-worker.js')
+            .then(reg => console.log('Service Worker registrado:', reg.scope))
+            .catch(err => console.error('Error SW:', err));
+        });
+      }
+    </script>
 </head>
 <body>
-
     <h1>Bienvenido a ClassUp</h1>
     <div class="form-container">
         <input type="text" id="nombre" placeholder="Ingresa tu usuario" required>
