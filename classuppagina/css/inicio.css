@@ -1,286 +1,279 @@
-    .title {
-            text-align: center;
-            font-size: 2.5rem;
-            color: #8b5e34;
-            margin-top: 20px;
-            margin-bottom: 10px;
-            font-weight: bold;
-            text-shadow: 1px 1px 3px rgba(224,209,192,0.6);
-        }  
-    /* App header: logo at left, title centered above content */
-    .app-header {
-      display: flex;
-      justify-content: center; /* center the brand container */
-      align-items: center;
-      width: 100%;
-      padding: 18px 0 10px; /* space below to separate from content */
-      box-sizing: border-box;
-      background: transparent;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      justify-content: center;
-      width: 100%;
-      max-width: 700px; /* match main container */
-      padding: 0 20px;  /* same horizontal padding as .container */
-      box-sizing: border-box;
-      margin: 0 auto;   /* center the brand block */
-    }
-    .app-logo {
-      width: 64px;
-      height: 64px;
-      display: block;
-      align-self: center;
-      border-radius: 8px;
-  /* use relative path from css/ to classuppagina root */
-  background-image: url("../ClassUp.png");
-  background-size: contain;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
+/* ======== ESTILO GENERAL ======== */
+body {
+  background-color: #fdf8f3;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #3e2c20;
+}
 
-    /* ensure the title is vertically centered with the logo */
-    .app-title { line-height: 1; display: inline-block; }
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
 
-    /* Responsive: logo slightly smaller on very small screens */
-    @media (max-width: 420px) {
-      .app-logo { width: 40px; height: 40px; object-fit: cover; }
-      .app-title { font-size: 1.2rem; }
-    }
-
-    /* cap header visual overflow in case image has whitespace */
-    .app-header, .brand { overflow: hidden; }
-    .app-title {
-      margin: 0;
-      font-size: 1.8rem;
-      color: #8b5e34;
-      font-weight: 700;
-      text-align: center;
-    }
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5e8dc; /* beige claro */
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 700px;
-      margin: auto;
-      padding: 20px;
-    }
-    .profile-card {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      padding: 15px;
-      background: #fff8f0;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    }
-    .profile-pic {
-      border-radius: 50%;
-      width: 50px;
-      height: 50px;
-      object-fit: cover;
-    }
-    .calendar-section h3 {
-      margin-top: 25px;
-      color: #5a4635;
-    }
-    .post {
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      margin-bottom: 15px;
-    }
-    .post-header {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .avatar {
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      object-fit: cover;
-      display: inline-block;
-    }
-    .event-btn {
-      background: #fff8f0;
-      color: #5c3a1d;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin: 5px 0;
-      transition: 0.2s;
-    }
-    .event-btn:hover {
-      background: #fff8f0;
-    }
-    .divider {
-      margin: 20px 0;
-    }
-    .empty-msg {
-      text-align: center;
-      color: gray;
-      margin: 20px 0;
-    }
-
-    /* Calendario */
-    #calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #fff8f0;
-      padding: 10px;
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    #calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 5px;
-      margin-bottom: 10px;
-    }
-    .day {
-      background: #fff;
-      padding: 10px;
-      text-align: center;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .day:hover {
-      background: #f0e1c6;
-    }
-    .today {
-      background: #fff8f0;
-      color: white;
-    }
-    #event-form {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      background: #fff8e6;
-      padding: 15px;
-      border-radius: 10px;
-    }
-    #event-form input, #event-form button {
-      padding: 8px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-    }
-    #event-form button {
-      background: #fff8f0;
-      color: #5c3a1d;
-      border: none;
-      cursor: pointer;
-    }
-    #event-form button:hover {
-      background: #fff8f0;
-    }
-/* Cuadro inferior fijo */
-.cuadro-opciones {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 20px;
-  background: #fff8f0;
-  padding: 14px 18px;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+/* ======== ENCABEZADO DE LA APP ======== */
+.app-header {
+  background-color: #8b5e34;
+  color: white;
   display: flex;
-  gap: 12px;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-logo {
+  width: 40px;
+  height: 40px;
+  background: url('logo.png') no-repeat center;
+  background-size: cover;
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* ======== PERFIL ======== */
+.profile-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.profile-card {
+  display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 60;
-  max-width: 460px;
-  width: auto;
+  gap: 15px;
 }
 
-.cuadro-opciones .boton-opcion {
-  text-decoration: none;
-  background: transparent;
-  border: none;
-  color: #5c3a1d;
-  font-weight: 600;
-  padding: 6px 8px;
-  border-radius: 8px;
-  cursor: pointer;
+.profile-pic {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid #b59b83;
+  object-fit: cover;
 }
 
-.cuadro-opciones .boton-opcion:hover {
-  background: #f2e6dd;
-}
-/* --- Recordatorios de amigos (mismo estilo que los tuyos) --- */
-.post.amigo {
-  border-left: 5px solid #d1b7a1; /* sutil diferencia */
-  background: #fff8f0;
-}
-
-.post .post-header .nombre-amigo {
-  color: #5c3a1d;
-  font-weight: 600;
-  font-size: 0.95rem;
+.profile-info h2 {
+  color: #8b5e34;
   margin: 0;
 }
 
-/* --- Comentarios --- */
-.comentarios {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #eee;
+.profile-info p {
+  color: #a98360;
+  margin: 2px 0 0 0;
 }
 
-.comentario {
-  background: #fff;
-  border-radius: 8px;
-  padding: 8px 10px;
-  margin-top: 6px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+/* ======== CALENDARIO Y RECORDATORIOS ======== */
+.calendar-section {
+  margin-top: 30px;
 }
 
-.comentario strong {
-  color: #5c3a1d;
-  font-size: 0.9rem;
+/* Botón “Nuevo recordatorio” */
+.event-btn {
+  background-color: #8b5e34;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+  margin-bottom: 10px;
+}
+.event-btn:hover {
+  background-color: #a06b40;
 }
 
-.comentario-form {
+/* Título */
+h3 {
+  text-align: left;
+  font-size: 1.4rem;
+  color: #8b5e34;
+  margin-bottom: 10px;
+}
+
+/* FORMULARIO (punto 5: animación suave) */
+#calendarioContainer {
+  display: none;
+  margin-top: 15px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #fff8f0;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+#event-form input, 
+#event-form button {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+#event-form button {
+  background-color: #8b5e34;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+#event-form button:hover {
+  background-color: #a06b40;
+}
+
+/* ======== TARJETAS DE RECORDATORIOS (punto 2) ======== */
+.post {
+  background: #fff8f0;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 15px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+.post:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.post-header {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-top: 10px;
+  gap: 10px;
 }
 
-.comentario-form input[type="text"] {
-  flex: 1;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  padding: 6px 10px;
+.avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #b59b83;
+}
+
+.post-date {
   font-size: 0.9rem;
+  color: #6b4e2e;
+  margin: 2px 0 0;
 }
 
-.comentario-form button {
-  background: #a5795b;
+.post-content {
+  margin-top: 8px;
+  font-size: 1rem;
+  color: #4a3a2a;
+}
+
+/* ======== COMENTARIOS ======== */
+.comentarios {
+  margin-top: 10px;
+  border-top: 1px solid #ddd;
+  padding-top: 8px;
+}
+.comentario-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 5px 0;
+}
+.comentario-foto {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #b59b83;
+}
+.comentarios p { margin: 0; }
+.comentarios form {
+  display: flex;
+  gap: 5px;
+  margin-top: 5px;
+}
+.comentarios input[type="text"] {
+  flex: 1;
+  padding: 5px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.comentarios button {
+  background: #fff8f0;
   border: none;
-  color: white;
-  border-radius: 8px;
-  padding: 6px 12px;
+  padding: 5px 10px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  font-weight: 600;
+  transition: background 0.3s;
+}
+.comentarios button:hover {
+  background: #f2e2d2;
 }
 
-.comentario-form button:hover {
-  background: #8f6645;
+/* ======== BOTONES CAMPANA Y ELIMINAR ======== */
+.campana-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  margin-left: auto;
+  transition: transform 0.2s;
+}
+.campana-btn:hover { transform: scale(1.2); }
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: #d9534f;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: transform 0.2s, color 0.2s;
+}
+.delete-btn:hover {
+  transform: scale(1.1);
+  color: #b52b27;
 }
 
-/* --- Botón de activar recordatorio --- */
-.campana-btn.activo {
-  color: #d49d76;
-  transform: scale(1.2);
+/* ======== NAVEGACIÓN INFERIOR ======== */
+.cuadro-opciones {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 25px;
+  padding: 10px;
+  background: #fff8f0;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.boton-opcion {
+  text-decoration: none;
+  color: #8b5e34;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+.boton-opcion:hover {
+  color: #a06b40;
+}
+
+/* ======== MENSAJE VACÍO ======== */
+.empty-msg {
+  text-align: center;
+  color: #a98360;
+  font-style: italic;
+  margin-top: 20px;
 }

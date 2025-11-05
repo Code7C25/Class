@@ -50,6 +50,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['activar_id'])) {
     exit();
 }
 
+// --- BORRAR recordatorio ---
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['borrar_id'])) {
+    $borrar_id = intval($_POST['borrar_id']);
+
+    $sql = "DELETE FROM recordatorios WHERE id = ? AND usuario = ?";
+    $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        die("Error en la consulta SQL (borrar recordatorio): " . $conn->error);
+    }
+
+    $stmt->bind_param("is", $borrar_id, $usuario);
+    $stmt->execute();
+    $stmt->close();
+
+    header("Location: inicio.php");
+    exit();
+}
+
 // --- Mostrar recordatorios del usuario y amigos ---
 $sql = "SELECT r.*, u.fotoPerfil 
         FROM recordatorios r
@@ -85,6 +103,10 @@ $stmt->close();
   .comentarios form { display: flex; gap: 5px; margin-top: 5px; }
   .comentarios input[type="text"] { flex: 1; padding: 5px; border-radius: 6px; border: 1px solid #ccc; }
   .comentarios button { background: #fff8f0; border: none; padding: 5px 10px; border-radius: 6px; cursor: pointer; }
+
+  /* Botón borrar */
+  .delete-btn { background: none; border: none; color: #d9534f; font-size: 20px; cursor: pointer; margin-left: 10px; }
+  .delete-btn:hover { transform: scale(1.1); color: #b52b27; }
 </style>
 </head>
 <body>
@@ -107,8 +129,9 @@ $stmt->close();
   </header>
 
   <section class="calendar-section">
-    <h3>Recordatorios recientes</h3>
+    <!-- Botón arriba -->
     <button class="event-btn" onclick="toggleCalendario()">➕ Nuevo recordatorio</button>
+    <h3>Recordatorios recientes</h3>
 
     <!-- FORMULARIO oculto -->
     <div id="calendarioContainer">
@@ -134,6 +157,15 @@ $stmt->close();
                 <strong>@<?= htmlspecialchars($ev['usuario']) ?></strong>
                 <p class="post-date"><?= htmlspecialchars($ev['titulo']) ?> 📅 <?= htmlspecialchars($ev['fecha']) ?> ⏰ <?= htmlspecialchars($ev['hora'] ?: 'Sin hora') ?></p>
               </div>
+
+              <?php if ($ev['usuario'] === $usuario): ?>
+                <!-- Botón borrar solo si es tu recordatorio -->
+                <form method="POST" style="display:inline;">
+                  <input type="hidden" name="borrar_id" value="<?= htmlspecialchars($ev['id']) ?>">
+                  <button class="delete-btn" type="submit" onclick="return confirm('¿Seguro que quieres borrar este recordatorio?')">Eliminar</button>
+                </form>
+              <?php endif; ?>
+
               <?php if (empty($ev['activado'])): ?>
                 <form method="POST" style="margin-left:auto;">
                   <input type="hidden" name="activar_id" value="<?= htmlspecialchars($ev['id']) ?>">
@@ -143,6 +175,7 @@ $stmt->close();
                 <span style="margin-left:auto;">✅ Activado</span>
               <?php endif; ?>
             </div>
+
             <div class="post-content">
               <p><?= htmlspecialchars($ev['descripcion'] ?: 'Sin descripción') ?></p>
             </div>
@@ -152,7 +185,6 @@ $stmt->close();
             <?php
             $cid = $ev['id'];
 
-            // Traer comentarios junto con foto de perfil
             $q_sql = "SELECT c.contenido, c.usuario, u.fotoPerfil 
                       FROM comentarios c
                       JOIN users u ON c.usuario = u.usuario

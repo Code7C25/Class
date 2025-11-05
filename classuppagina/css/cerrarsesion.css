@@ -1,32 +1,74 @@
+/* ======== ESTILO GENERAL CLASSUP ======== */
 body {
-      background-color: #f9f4ef;
-      font-family: 'Segoe UI', sans-serif;
-      text-align: center;
-      padding: 80px 20px;
-      color: #5c3a1d;
-    }
+  background: #f5e8dc;
+  font-family: 'Segoe UI', sans-serif;
+  text-align: center;
+  padding: 100px 20px;
+  color: #5c3a1d;
+  margin: 0;
+}
 
-    h1 {
-      font-size: 2.2rem;
-      color: #8b5e34;
-      margin-bottom: 30px;
-      text-shadow: 1px 1px 3px rgba(224, 209, 192, 0.8);
-    }
+/* ======== TÍTULO ======== */
+h1 {
+  font-size: 2.4rem;
+  color: #8b5e34;
+  margin-bottom: 30px;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(224, 209, 192, 0.7);
+}
 
-    a {
-      font-size: 1.1rem;
-      text-decoration: none;
-      color: #fff;
-      background: #d1b7a1;
-      padding: 12px 26px;
-      border-radius: 25px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
-      display: inline-block;
-      font-weight: bold;
-    }
+/* ======== TEXTO / PÁRRAFOS ======== */
+p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  color: #6e4b2f;
+  line-height: 1.6;
+}
 
-    a:hover {
-      background: #b59b83;
-      transform: scale(1.05);
-    }
+/* ======== BOTONES / LINKS ======== */
+a, .boton {
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: #fff;
+  background: #d1b7a1;
+  padding: 12px 26px;
+  border-radius: 25px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  display: inline-block;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+a:hover, .boton:hover {
+  background: #b59b83;
+  transform: scale(1.05);
+}
+
+/* ======== ÍCONOS OPCIONALES ======== */
+a i, .boton i {
+  margin-right: 8px;
+  font-size: 1.2rem;
+  vertical-align: middle;
+  transition: transform 0.3s ease;
+}
+
+a:hover i, .boton:hover i {
+  transform: translateX(3px);
+}
+
+/* ======== RESPONSIVE ======== */
+@media (max-width: 600px) {
+  body {
+    padding: 60px 15px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  a, .boton {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+}

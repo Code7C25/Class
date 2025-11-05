@@ -1,17 +1,18 @@
-/* ======== ESTILOS PERFIL CLASSUP ======== */
+/* ======== ESTILOS PERFIL CLASSUP (estilo unificado con inicio.css) ======== */
 
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f5e8dc;
-  color: #5c3a1d;
+  background-color: #fdf8f3;
+  font-family: 'Poppins', sans-serif;
+  color: #3e2c20;
   margin: 0;
-  padding: 20px;
+  padding: 0;
 }
 
 /* CONTENEDOR PRINCIPAL */
 .container {
   max-width: 800px;
-  margin: 0 auto 100px auto;
+  margin: 20px auto 100px auto;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,10 +23,15 @@ body {
   background: #fff8f0;
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   text-align: center;
   margin-bottom: 30px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
+}
+.profile-section:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .profile-card {
@@ -40,32 +46,35 @@ body {
   height: 110px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #b59b83;
+  border: 3px solid #b59b83;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
 .profile-info h2 {
   margin: 8px 0 2px;
   font-size: 1.4rem;
-  color: #5c3a1d;
+  color: #8b5e34;
 }
 
 .profile-info p {
   margin: 0 0 10px;
-  color: #7a5c3d;
-  font-size: 0.9rem;
+  color: #a98360;
+  font-size: 0.95rem;
 }
 
 .profile-info .boton-opcion {
   display: inline-block;
-  background: #d1b7a1;
-  color: #fff;
+  background: #8b5e34;
+  color: white;
   text-decoration: none;
   padding: 8px 14px;
   border-radius: 8px;
-  transition: background 0.3s ease;
+  font-weight: bold;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 .profile-info .boton-opcion:hover {
-  background: #b59b83;
+  background: #a06b40;
+  transform: scale(1.05);
 }
 
 /* ======== DIVISOR ======== */
@@ -81,9 +90,15 @@ body {
   background: #fff8f0;
   padding: 25px;
   border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
   text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 #calendar-header {
@@ -96,24 +111,24 @@ body {
 
 #month-year {
   font-size: 1.4rem;
-  color: #5c3a1d;
+  color: #8b5e34;
   font-weight: bold;
 }
 
 #prev-month,
 #next-month {
-  background: #b59b83;
+  background: #8b5e34;
   color: white;
   border: none;
   padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
-
 #prev-month:hover,
 #next-month:hover {
-  background: #a28569;
+  background: #a06b40;
+  transform: scale(1.05);
 }
 
 /* Tabla calendario */
@@ -129,69 +144,82 @@ body {
   border: 1px solid #e0d1c0;
   text-align: center;
   width: 14.2%;
+  font-size: 0.95rem;
 }
 
 #tabla-calendario td.hoy {
-  background-color: #d1b7a1;
+  background-color: #8b5e34;
   color: white;
   font-weight: bold;
   border-radius: 4px;
 }
 
-/* ======== MENÚ INFERIOR ======== */
+/* ======== MENÚ INFERIOR (IGUAL QUE inicio.css) ======== */
 .cuadro-opciones {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 20px;
-  background: #fff8f0;
-  padding: 12px 20px;
-  border-radius: 15px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  bottom: 18px;
+  background: #fdf8f3;
+  padding: 10px 25px;
+  border-radius: 18px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   display: flex;
-  gap: 15px;
-  justify-content: center;
-  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  gap: 22px;
   z-index: 999;
+  max-width: 480px;
+  width: 90%;
+  transition: all 0.3s ease;
 }
 
 .cuadro-opciones .boton-opcion {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #8b5e34;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s, color 0.3s;
   text-decoration: none;
-  background: #d1b7a1;
-  color: white;
-  padding: 10px 14px;
-  border-radius: 10px;
-  font-weight: bold;
-  transition: background 0.3s ease;
+}
+
+.cuadro-opciones .boton-opcion i {
+  font-size: 1.3rem;
+  margin-bottom: 3px;
+  transition: color 0.3s;
 }
 
 .cuadro-opciones .boton-opcion:hover {
-  background: #b59b83;
+  transform: translateY(-3px);
+  color: #a06b40;
 }
 
-/* ======== RESPONSIVE ======== */
+.cuadro-opciones .boton-opcion:hover i {
+  color: #a06b40;
+}
+
+/* Opción activa */
+.cuadro-opciones .boton-opcion.activo {
+  color: #a06b40;
+}
+
 @media (max-width: 600px) {
-  .container {
-    padding: 10px;
-  }
-
-  .profile-pic {
-    width: 90px;
-    height: 90px;
-  }
-
-  #month-year {
-    font-size: 1.2rem;
-  }
-
   .cuadro-opciones {
-    flex-direction: column;
     gap: 10px;
-    bottom: 10px;
-    width: 90%;
+    padding: 10px 15px;
   }
 
   .cuadro-opciones .boton-opcion {
-    width: 100%;
+    font-size: 0.8rem;
+  }
+
+  .cuadro-opciones .boton-opcion i {
+    font-size: 1.1rem;
   }
 }

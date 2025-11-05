@@ -1,79 +1,106 @@
+/* ======== ESTILO CLASSUP - AMIGOS ======== */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background: #f5e8dc;
-  color: #5c3a1d;
+  background-color: #fdf8f3;
+  font-family: 'Poppins', sans-serif;
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-  padding: 40px 20px;
+  padding: 0;
+  color: #3e2c20;
 }
 
-/* Contenedor general */
-.container {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
+/* ======== ENCABEZADO DE LA APP ======== */
+.app-header {
+  background-color: #8b5e34;
+  color: white;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 25px;
+  padding: 10px 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-/* Título */
-h1 {
-  font-size: 2.4rem;
-  font-weight: 700;
-  margin-bottom: 10px;
+.brand {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-/* Sección de perfil */
+.app-logo {
+  width: 40px;
+  height: 40px;
+  background: url('logo.png') no-repeat center;
+  background-size: cover;
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* ======== PERFIL ======== */
 .profile-section {
-  background: #fff8f0;
-  padding: 25px;
-  border-radius: 16px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
+  margin-top: 20px;
   text-align: center;
 }
 
-/* --- Tarjeta de usuario --- */
+.profile-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.profile-pic {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 3px solid #b59b83;
+  object-fit: cover;
+}
+
+.profile-info h2 {
+  color: #8b5e34;
+  margin: 0;
+}
+
+.profile-info p {
+  color: #a98360;
+  margin: 2px 0 0 0;
+}
+
+/* ======== LISTA DE AMIGOS ======== */
+.container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 10px 20px;
+}
+
 .usuario-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #fff8f0;
-  border-radius: 14px;
-  padding: 16px 22px;
-  margin-bottom: 16px;
-  width: 100%;
-  max-width: 700px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  transition: transform .2s ease, background-color .2s ease;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s;
 }
-
 .usuario-card:hover {
-  transform: scale(1.02);
-  background: #d1b7a1;
-  color: white;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
 }
 
 .usuario-info {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 12px;
 }
 
 .amigo-foto {
-  width: 70px;
-  height: 70px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #c9a67b;
+  border: 2px solid #b59b83;
 }
 
 .usuario-nombre {
@@ -82,74 +109,59 @@ h1 {
   color: #5c3a1d;
 }
 
-/* Botón ver perfil */
+/* ======== BOTÓN VER PERFIL ======== */
 .ver-perfil-btn {
-  background-color: #a5795b;
+  background-color: #8b5e34;
   color: white;
   border: none;
-  padding: 10px 16px;
-  border-radius: 10px;
+  border-radius: 20px;
+  padding: 8px 16px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: bold;
   text-decoration: none;
-  font-size: 0.95rem;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: background 0.3s, transform 0.2s;
 }
-
 .ver-perfil-btn:hover {
-  background-color: #8f6645;
+  background-color: #a06b40;
   transform: scale(1.05);
 }
 
-/* Mensaje vacío */
+/* ======== MENSAJE VACÍO ======== */
 .empty-msg {
   text-align: center;
-  color: #777;
+  color: #a98360;
   font-style: italic;
   margin-top: 20px;
 }
 
-/* --- Menú inferior --- */
+/* ======== MENÚ INFERIOR ======== */
 .cuadro-opciones {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 25px;
-  background: #fff8f0;
-  padding: 14px 18px;
-  border-radius: 14px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.18);
-  border: 2px solid rgba(165, 135, 110, 0.9);
   display: flex;
-  gap: 20px;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-
-.cuadro-opciones .boton-opcion {
-  text-decoration: none;
-  background: transparent;
-  border: none;
-  color: #5c3a1d;
-  font-weight: 600;
-  font-size: 1rem;
-  padding: 8px 10px;
+  justify-content: space-around;
+  margin-top: 30px;
+  padding: 10px;
+  background: #fff8f0;
   border-radius: 10px;
-  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
-.cuadro-opciones .boton-opcion:hover {
-  background: #f2e6dd;
+.boton-opcion {
+  text-decoration: none;
+  color: #8b5e34;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+.boton-opcion:hover {
+  color: #a06b40;
 }
 
-/* --- Responsivo --- */
+/* ======== RESPONSIVO ======== */
 @media (max-width: 600px) {
   .usuario-card {
     flex-direction: column;
     align-items: center;
-    gap: 12px;
     text-align: center;
+    gap: 10px;
   }
 
   .amigo-foto {
@@ -167,9 +179,7 @@ h1 {
   }
 
   .cuadro-opciones {
-    bottom: 12px;
-    padding: 10px 12px;
+    flex-wrap: wrap;
     gap: 10px;
-    width: 95%;
   }
 }
