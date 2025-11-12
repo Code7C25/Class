@@ -12,7 +12,7 @@ $usuario = $_SESSION['usuario'] ?? $_COOKIE['usuario'];
 $fotoPerfil = $_SESSION['fotoPerfil'] ?? 'https://via.placeholder.com/100';
 
 // --- Guardar nuevo recordatorio ---
-if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['titulo'], $_POST['fecha'])) {
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['titulo'], $_POST['fecha']) && empty($_POST['editar_id'])) {
     $titulo = trim($_POST['titulo']);
     $fecha = trim($_POST['fecha']);
     $hora = $_POST['hora'] ?? '';
@@ -26,6 +26,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['titulo'], $_POST['fec
     $stmt->close();
 
     header("Location: inicio.php");
+    exit();
+}
+
+// --- EDITAR recordatorio existente ---
+if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['editar_id'])) {
+    $editar_id = intval($_POST['editar_id']);
+    $titulo = trim($_POST['titulo']);
+    $fecha = trim($_POST['fecha']);
+    $hora = $_POST['hora'] ?? '';
+    $descripcion = $_POST['descripcion'] ?? '';
+    $dias_antes = intval($_POST['dias_antes'] ?? 1);
+    $hora_aviso = $_POST['hora_aviso'] ?? '08:00';
+
+    $sql = "UPDATE recordatorios 
+        SET titulo=?, fecha=?, hora=?, descripcion=?, dias_antes=?, hora_aviso=?, notificado=0
+        WHERE id=? AND usuario=?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssisss", $titulo, $fecha, $hora, $descripcion, $dias_antes, $hora_aviso, $editar_id, $usuario);
+    $stmt->execute();
+    $stmt->close();
+
+    header("Location: inicio.php?edit_ok=1");
     exit();
 }
 
@@ -85,6 +108,7 @@ $result = $stmt->get_result();
 $eventos = $result->fetch_all(MYSQLI_ASSOC);
 $stmt->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -109,6 +133,20 @@ $stmt->close();
   /* Botón borrar */
   .delete-btn { background: none; border: none; color: #d9534f; font-size: 20px; cursor: pointer; margin-left: 10px; }
   .delete-btn:hover { transform: scale(1.1); color: #b52b27; }
+
+  /* Botón editar */
+  .edit-btn {
+    background: none;
+    border: none;
+    color: #8b5e34;
+    font-size: 18px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  .edit-btn:hover {
+    color: #5c3a1d;
+    transform: scale(1.1);
+  }
 </style>
 </head>
 <body>
@@ -167,6 +205,9 @@ $stmt->close();
               </div>
 
               <?php if ($ev['usuario'] === $usuario): ?>
+                <!-- BOTÓN EDITAR -->
+                <a href="editar_recordatorio.php?id=<?= htmlspecialchars($ev['id']) ?>" class="edit-btn">✏️ Editar</a>
+
                 <form method="POST" style="display:inline;">
                   <input type="hidden" name="borrar_id" value="<?= htmlspecialchars($ev['id']) ?>">
                   <button class="delete-btn" type="submit" onclick="return confirm('¿Seguro que quieres borrar este recordatorio?')">Eliminar</button>
