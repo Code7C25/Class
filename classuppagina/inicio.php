@@ -17,9 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['titulo'], $_POST['fec
     $fecha = trim($_POST['fecha']);
     $hora = $_POST['hora'] ?? '';
     $descripcion = $_POST['descripcion'] ?? '';
+    $dias_antes = intval($_POST['dias_antes'] ?? 1);
+    $hora_aviso = $_POST['hora_aviso'] ?? '08:00';
 
-    $stmt = $conn->prepare("INSERT INTO recordatorios (usuario, titulo, fecha, hora, descripcion) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $usuario, $titulo, $fecha, $hora, $descripcion);
+    $stmt = $conn->prepare("INSERT INTO recordatorios (usuario, titulo, fecha, hora, descripcion, dias_antes, hora_aviso) VALUES (?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssis", $usuario, $titulo, $fecha, $hora, $descripcion, $dias_antes, $hora_aviso);
     $stmt->execute();
     $stmt->close();
 
@@ -129,22 +131,28 @@ $stmt->close();
   </header>
 
   <section class="calendar-section">
-    <!-- Botón arriba -->
     <button class="event-btn" onclick="toggleCalendario()">➕ Nuevo recordatorio</button>
     <h3>Recordatorios recientes</h3>
 
-    <!-- FORMULARIO oculto -->
     <div id="calendarioContainer">
       <form id="event-form" method="POST" action="">
         <input type="text" name="titulo" placeholder="Título del evento" required>
         <input type="date" name="fecha" required>
         <input type="time" name="hora">
         <input type="text" name="descripcion" placeholder="Descripción (opcional)">
+        <!-- NUEVO: selección de aviso anticipado -->
+        <label>📅 Avisar cuántos días antes:</label>
+        <select name="dias_antes">
+          <option value="1">1 día antes</option>
+          <option value="2">2 días antes</option>
+          <option value="3">3 días antes</option>
+        </select>
+        <label>⏰ A qué hora avisar:</label>
+        <input type="time" name="hora_aviso" value="08:00">
         <button type="submit">Guardar recordatorio</button>
       </form>
     </div>
 
-    <!-- Recordatorios -->
     <div id="postsContainer">
       <?php if (empty($eventos)): ?>
         <p class="empty-msg">Todavía no hay recordatorios 📭</p>
@@ -159,7 +167,6 @@ $stmt->close();
               </div>
 
               <?php if ($ev['usuario'] === $usuario): ?>
-                <!-- Botón borrar solo si es tu recordatorio -->
                 <form method="POST" style="display:inline;">
                   <input type="hidden" name="borrar_id" value="<?= htmlspecialchars($ev['id']) ?>">
                   <button class="delete-btn" type="submit" onclick="return confirm('¿Seguro que quieres borrar este recordatorio?')">Eliminar</button>
@@ -205,8 +212,6 @@ $stmt->close();
             <?php
                 endwhile;
                 $q->close();
-            } else {
-                echo "<p style='color:red; font-size:12px;'>⚠️ Error SQL: " . htmlspecialchars($conn->error) . "</p>";
             }
             ?>
             <form method="POST" action="guardar_comentario.php">
@@ -230,11 +235,35 @@ $stmt->close();
   </div>
 </div>
 
+<audio id="notifSound" src="https://cdn.pixabay.com/download/audio/2021/09/06/audio_0c385da3b7.mp3" preload="auto"></audio>
+
 <script>
 function toggleCalendario() {
     const calendario = document.getElementById("calendarioContainer");
     calendario.style.display = (calendario.style.display === "none" || calendario.style.display === "") ? "block" : "none";
 }
+
+// --- Notificaciones automáticas ---
+setInterval(checkReminders, 60000); // cada 1 min
+
+function checkReminders(){
+  fetch('verificar_recordatorios.php')
+    .then(r=>r.json())
+    .then(data=>{
+      if(data.length>0){
+        const sound=document.getElementById("notifSound");
+        sound.play();
+        data.forEach(r=>{
+          new Notification("⏰ "+r.titulo,{
+            body:"📅 "+r.fecha+" "+(r.hora||"")+" → "+(r.descripcion||""),
+            icon:"https://cdn-icons-png.flaticon.com/512/3898/3898080.png"
+          });
+        });
+      }
+    });
+}
+
+if(Notification.permission!=="granted") Notification.requestPermission();
 </script>
 </body>
 </html>

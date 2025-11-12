@@ -1,9 +1,11 @@
 <?php
+
 // index.php - simple login that uses conexion.php
 // - crea la tabla `usuarios` si no existe
 // - inserta el usuario si no existe
 // - inicia sesión y pone una cookie 'usuario' para que el JS del front pueda usarla
 include 'conexion.php';
+include('notificaciones.php'); 
 session_start();
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
