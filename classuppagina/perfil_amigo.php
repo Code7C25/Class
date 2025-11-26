@@ -57,14 +57,13 @@ $stmt->close();
 </style>
 </head>
 <body>
-<a href="inicio.php" class="btn-volver">⬅</a>
 <header class="app-header">
   <div class="brand">
     <div class="app-logo" role="img" aria-label="ClassUp logo"></div>
     <h1 class="app-title">ClassUp</h1>
   </div>
 </header>
-
+<a href="inicio.php" class="btn-volver">⬅</a>
 <div class="container">
   <header class="profile-section">
     <div class="profile-card">
@@ -134,11 +133,16 @@ $stmt->close();
   </section>
 
   <div class="cuadro-opciones">
-    <a href="inicio.php" class="boton-opcion">Inicio</a>
-    <a href="busqueda.php" class="boton-opcion">Buscar</a>
-    <a href="perfil.php" class="boton-opcion">Perfil</a>
-    <a href="amigos.php" class="boton-opcion">Amigos</a>
-    <a href="configuracion.html" class="boton-opcion">Ajustes</a>
+    <a href="inicio.php" class="boton-opcion">
+    <img src="img/inicio.jpg" class="icono-menu">Inicio</a>
+    <a href="busqueda.php" class="boton-opcion">
+    <img src="img/buscar.png" class="icono-menu">Buscar</a>
+    <a href="perfil.php" class="boton-opcion">
+    <img src="img/perfil.jpg" class="icono-menu">Perfil</a>
+    <a href="amigos.php" class="boton-opcion">
+    <img src="img/amigos.jpg" class="icono-menu">Amigos</a>
+    <a href="configuracion.html" class="boton-opcion">
+    <img src="img/ajuste.jpg" class="icono-menu">Ajustes</a>
   </div>
 </div>
 </body>
