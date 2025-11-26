@@ -12,10 +12,10 @@
 
     <!-- Header -->
     <header class="profile-section">
-      <h1>🔍 Buscar Usuarios</h1>
+      <h1> Buscar Usuarios</h1>
       <div class="search-bar">
-        <img src="lupa.png" alt="Lupa" class="search-icon">
-        <input type="text" id="search-input" placeholder="Buscar por nombre de usuario...">
+        <img src="img/buscar.png" alt="Lupa" class="search-icon">
+        <input type="text" id="search-input" placeholder="Buscar">
       </div>
     </header>
 
@@ -26,15 +26,7 @@
 
   </div>
 
-  <!-- Cuadro inferior fijo -->
-  <div class="cuadro-opciones">
-    <a href="inicio.php" class="boton-opcion">Inicio</a>
-    <a href="busqueda.php" class="boton-opcion">Buscar</a>
-    <a href="perfil.php" class="boton-opcion">Perfil</a>
-    <a href="amigos.php" class="boton-opcion">Amigos</a>
-    <a href="configuracion.html" class="boton-opcion">Ajustes</a>
-  </div>
-
+ 
   <script>
     const searchInput = document.getElementById('search-input');
     const listaUsuarios = document.getElementById('lista-usuarios');

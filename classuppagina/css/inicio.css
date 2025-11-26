@@ -277,3 +277,9 @@ h3 {
   font-style: italic;
   margin-top: 20px;
 }
+.icono-menu {
+    width: 22px;  
+    height: 22px;
+    margin-right: 4px; 
+    vertical-align: middle;
+}

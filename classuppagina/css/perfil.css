@@ -243,3 +243,9 @@ body {
   background: #e6d8c7;
   transform: scale(1.06);
 }
+.icono-menu {
+    width: 22px;  
+    height: 22px;
+    margin-right: 4px; 
+    vertical-align: middle;
+}
