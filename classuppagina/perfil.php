@@ -29,6 +29,7 @@ $recordatorios = $result->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" href="css/perfil.css">
 </head>
 <body>
+<a href="inicio.php" class="btn-volver">⬅</a>
 <div class="container">
     <div class="profile-section">
         <div class="profile-card">

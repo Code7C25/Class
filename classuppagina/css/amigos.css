@@ -183,3 +183,23 @@ body {
     gap: 10px;
   }
 }
+.btn-volver {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  font-size: 20px;
+  text-decoration: none;
+  color: #8b5e34;
+  background: #fff3e3;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  transition: background 0.25s ease, transform 0.2s ease;
+  z-index: 1000;
+}
+
+.btn-volver:hover {
+  background: #e6d8c7;
+  transform: scale(1.06);
+}

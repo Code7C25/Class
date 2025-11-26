@@ -57,6 +57,7 @@ $stmt->close();
 </style>
 </head>
 <body>
+<a href="inicio.php" class="btn-volver">⬅</a>
 <header class="app-header">
   <div class="brand">
     <div class="app-logo" role="img" aria-label="ClassUp logo"></div>

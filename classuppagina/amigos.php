@@ -32,6 +32,7 @@ while ($fila = $result->fetch_assoc()) {
 
 </head>
 <body>
+  <a href="inicio.php" class="btn-volver">⬅</a>
   <div class="container">
     
     <!-- Encabezado -->

@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/busqueda.css">
 </head>
 <body>
+<a href="inicio.php" class="btn-volver">⬅</a>
   <div class="container">
 
     <!-- Header -->
