@@ -20,8 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($usuario === "" || $clave === "") {
         $error = "Completa todos los campos.";
     } else {
-        // Buscar usuario en la base de datos
-        $sql = "SELECT password, fotoPerfil FROM users WHERE usuario = ?";
+        $sql = "SELECT id, password, fotoPerfil FROM users WHERE usuario = ?";
         $stmt = $conn->prepare($sql);
 
         if ($stmt === false) {
@@ -33,24 +32,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            $stmt->bind_result($passwordHash, $fotoPerfil);
+            $stmt->bind_result($id, $passwordHash, $fotoPerfil);
             $stmt->fetch();
 
-            // Verificar contraseña
             if (password_verify($clave, $passwordHash)) {
-                // Guardar datos en la sesión
+
                 $_SESSION['usuario'] = $usuario;
+                $_SESSION['id'] = $id;
                 $_SESSION['fotoPerfil'] = $fotoPerfil;
 
-                // Redirigir a inicio.php
                 header("Location: inicio.php");
                 exit;
+
             } else {
                 $error = "Contraseña incorrecta.";
             }
         } else {
             $error = "Usuario no encontrado.";
         }
+
         $stmt->close();
     }
 }
@@ -62,32 +62,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de Sesión | ClassUp</title>
     <link rel="stylesheet" href="css/login.css">
+    <script src="main.js"></script>
 </head>
 <body>
 
-<div class="container">
-    <div class="logo">
-        <img src="ClassUp.png" alt="ClassUp Logo" class="logo-img">
-        <h1>Bienvenido a <span>ClassUp</span></h1>
+    <div class="container">
+        <div class="logo">
+            <img src="ClassUp.png" alt="ClassUp Logo" class="logo-img">
+            <h1>Bienvenido a <span>ClassUp</span></h1>
+        </div>
+
+        <div class="form-card">
+            <h2>Iniciar Sesión</h2>
+
+            <form method="post" action="login.php" id="loginForm">
+                <input type="text" id="usuario" name="usuario" placeholder="Nombre de usuario" required>
+                <input type="password" id="clave" name="clave" placeholder="Contraseña" required>
+                <button type="submit">Entrar</button>
+            </form>
+
+            <?php if (isset($error)) { ?>
+                <p style="color:red; margin-top:10px;"><?= $error ?></p>
+            <?php } ?>
+
+            <p class="registrate">
+                ¿No tienes cuenta? 
+                <a href="registro.html">Regístrate</a>
+            </p>
+        </div>
     </div>
 
-    <div class="form-card">
-        <h2>Iniciar Sesión</h2>
-        <form method="post" action="login.php" id="loginForm">
-            <input type="text" id="usuario" name="usuario" placeholder="Nombre de usuario" required>
-            <input type="password" id="clave" name="clave" placeholder="Contraseña" required>
-            <button type="submit">Entrar</button>
-        </form>
-        <?php
-        if (isset($error)) {
-            echo "<p style='color:red; margin-top:10px;'>$error</p>";
-        }
-        ?>
-        <p class="registrate">¿No tienes cuenta? 
-            <a href="registro.html">Regístrate</a>
-        </p>
-    </div>
-</div>
+    <script>
+        
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            const usuario = document.getElementById('usuario').value.trim();
+            const clave = document.getElementById('clave').value.trim();
+            if (!usuario || !clave) {
+                e.preventDefault();
+                alert('Por favor completa todos los campos.');
+            }
+        });
+    </script>
 
 </body>
 </html>

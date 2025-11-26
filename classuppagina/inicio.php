@@ -162,7 +162,7 @@ $stmt->close();
     <div class="profile-card">
       <img id="foto-perfil-inicio" src="<?= htmlspecialchars($fotoPerfil) ?>" alt="fotoPerfil" class="profile-pic">
       <div class="profile-info">
-        <h2>Mi Calendario Social</h2>
+        <h2>Calendario Escolar</h2>
         <p>@<?= htmlspecialchars($usuario) ?></p>
       </div>
     </div>
