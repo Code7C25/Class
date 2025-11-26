@@ -27,11 +27,11 @@
 
   <!-- Cuadro inferior fijo -->
   <div class="cuadro-opciones">
-    <a href="inicio.php" class="boton-opcion">🏠 Inicio</a>
-    <a href="busqueda.php" class="boton-opcion">🔍 Buscar</a>
-    <a href="perfil.php" class="boton-opcion">👤 Perfil</a>
-    <a href="amigos.php" class="boton-opcion">👥 Amigos</a>
-    <a href="configuracion.html" class="boton-opcion">⚙️ Ajustes</a>
+    <a href="inicio.php" class="boton-opcion">Inicio</a>
+    <a href="busqueda.php" class="boton-opcion">Buscar</a>
+    <a href="perfil.php" class="boton-opcion">Perfil</a>
+    <a href="amigos.php" class="boton-opcion">Amigos</a>
+    <a href="configuracion.html" class="boton-opcion">Ajustes</a>
   </div>
 
   <script>
