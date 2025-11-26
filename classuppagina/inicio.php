@@ -193,7 +193,7 @@ $stmt->close();
 
     <div id="postsContainer">
       <?php if (empty($eventos)): ?>
-        <p class="empty-msg">Todavía no hay recordatorios 📭</p>
+        <p class="empty-msg">Todavía no hay recordatorios </p>
       <?php else: ?>
         <?php foreach ($eventos as $ev): ?>
           <div class="post">

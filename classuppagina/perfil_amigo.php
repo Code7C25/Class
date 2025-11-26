@@ -80,7 +80,7 @@ $stmt->close();
 
     <div id="postsContainer">
       <?php if (empty($eventos)): ?>
-        <p class="empty-msg">Este amigo no tiene recordatorios 📭</p>
+        <p class="empty-msg">Este amigo no tiene recordatorios </p>
       <?php else: ?>
         <?php foreach ($eventos as $ev): ?>
           <div class="post">

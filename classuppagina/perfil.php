@@ -36,7 +36,7 @@ $recordatorios = $result->fetch_all(MYSQLI_ASSOC);
             <img src="<?= htmlspecialchars($fotoPerfil) ?>" alt="Foto de perfil" class="profile-pic">
             <div class="profile-info">
                 <h2>@<?= htmlspecialchars($usuario) ?></h2>
-                <a href="editar_perfil.php" class="boton-opcion">✏️ Editar Perfil</a>
+                <a href="editar_perfil.php" class="boton-opcion">Editar Perfil</a>
             </div>
         </div>
     </div>
