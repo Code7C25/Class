@@ -203,3 +203,17 @@ body {
   background: #e6d8c7;
   transform: scale(1.06);
 }
+.eliminar-btn {
+  background: #8b5e34;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 6px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.eliminar-btn:hover {
+  background: #d93636;
+}

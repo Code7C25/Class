@@ -61,6 +61,13 @@ while ($fila = $result->fetch_assoc()) {
               onclick="window.location.href='perfil_amigo.php?usuario=<?= urlencode($a['usuario']) ?>'">
               👀 Ver perfil
             </button>
+            <button 
+  class="eliminar-btn"
+  onclick="if(confirm('¿Seguro que quieres eliminar a este amigo?')) 
+           window.location.href='eliminar_amigo.php?amigo=<?= urlencode($a['usuario']) ?>'">
+  ❌ Eliminar amigo
+</button>
+
           </div>
         <?php endforeach; ?>
       <?php endif; ?>

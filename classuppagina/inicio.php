@@ -248,7 +248,12 @@ $stmt->close();
             ?>
                 <div class="comentario-item">
                     <img src="<?= htmlspecialchars($c['fotoPerfil'] ?? 'https://via.placeholder.com/40') ?>" class="comentario-foto" alt="avatar">
-                    <p><strong>@<?= htmlspecialchars($c['usuario']) ?>:</strong> <?= htmlspecialchars($c['contenido']) ?></p>
+                    <p><strong>
+    <a href="perfil_amigo.php?usuario=<?= urlencode($c['usuario']) ?>" class="coment-user">
+      @<?= htmlspecialchars($c['usuario']) ?>
+    </a>:
+  </strong>
+  <?= htmlspecialchars($c['contenido']) ?></p>
                 </div>
             <?php
                 endwhile;
@@ -269,15 +274,15 @@ $stmt->close();
 
   <div class="cuadro-opciones">
     <a href="inicio.php" class="boton-opcion">
-    <img src="img/inicio.jpg" class="icono-menu">Inicio</a>
+    <img src="img/inicio.jpg" class="icono-menu"></a>
     <a href="busqueda.php" class="boton-opcion">
-    <img src="img/buscar.png" class="icono-menu">Buscar</a>
+    <img src="img/buscar.png" class="icono-menu"></a>
     <a href="perfil.php" class="boton-opcion">
-    <img src="img/perfil.jpg" class="icono-menu">Perfil</a>
+    <img src="img/perfil.jpg" class="icono-menu"></a>
     <a href="amigos.php" class="boton-opcion">
-    <img src="img/amigos.jpg" class="icono-menu">Amigos</a>
+    <img src="img/amigos.jpg" class="icono-menu"></a>
     <a href="configuracion.html" class="boton-opcion">
-    <img src="img/ajuste.jpg" class="icono-menu">Ajustes</a>
+    <img src="img/ajuste.jpg" class="icono-menu"></a>
   </div>
 </div>
 

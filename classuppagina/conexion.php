@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$database = "paginaclassup"; // 👈 este es el nombre correcto
+$database = "paginaclassup"; 
 
 $conn = new mysqli($servername, $username, $password, $database);
 
