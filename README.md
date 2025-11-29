@@ -1,2 +1,2 @@
-# Class
+# Classup
 Calendario social
