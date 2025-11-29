@@ -71,7 +71,39 @@ $stmt->close();
       <div class="profile-info">
         <h2>@<?= htmlspecialchars($datosAmigo['usuario']) ?></h2>
         <p>Perfil de amigo</p>
+        <?php
+// Verificar si ya está agregado
+$check = $conn->prepare("SELECT * FROM amigos WHERE usuario=? AND amigo=?");
+$check->bind_param("ss", $usuario, $amigo);
+$check->execute();
+$yaEsAmigo = $check->get_result()->num_rows > 0;
+?>
+
+<?php if (!$yaEsAmigo): ?>
+    <button class="add-btn" 
+        onclick="agregarAmigo('<?= $amigo ?>')">➕ Agregar amigo
+    </button>
+<?php else: ?>
+    <button class="add-btn" style="background:#ccc;" disabled>
+        ✔ Ya son amigos
+    </button>
+<?php endif; ?>
+<style>
+.add-btn {
+  margin-top: 10px;
+  background: #b59b83;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.add-btn:hover { background: #9c856e; }
+</style>
+
       </div>
+      
     </div>
   </header>
 
@@ -145,5 +177,26 @@ $stmt->close();
     <img src="img/ajuste.jpg" class="icono-menu">Ajustes</a>
   </div>
 </div>
+<script>
+function agregarAmigo(amigo) {
+    fetch('agregarAmigo.php', {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/x-www-form-urlencoded' 
+        },
+        body: 'amigo=' + encodeURIComponent(amigo)
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert('Amigo agregado ✔');
+            location.reload();
+        } else {
+            alert('Error: ' + data.error);
+        }
+    });
+}
+</script>
+
 </body>
 </html>
