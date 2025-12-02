@@ -58,7 +58,7 @@ Cómo Usar el Sistema
 
 1. Registrarse: creando una cuenta.  
 2. Iniciar sesión para acceder a todas las funciones.  
-3. Publicar recordatorios desde la página principal o mispost.html.  
+3. Publicar recordatorios desde la página principal  
    *Los posts aparecen automáticamente en inicio.php con su diseño incorporado.*  
 4. Comentar en publicaciones de otros usuarios.  
 5. Agregar amigos y activar recordatorios compartidos.  
