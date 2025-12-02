@@ -41,7 +41,7 @@ Frontend:
 Backend
 - PHP  
 - MySQL
-- JAVA
+- JavaScript
 
 Herramientas de trabajo
 - Visual Studio Code  
